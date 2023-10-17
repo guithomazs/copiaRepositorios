@@ -1,0 +1,38 @@
+<form action="#">
+
+    <div class="grid">
+
+    <label for="nome">Nome</label>
+    <input type="text" name="nome" id="nome" required>
+
+    <label for="registroConselho">Registro</label>
+    <input type="text" name="registroConselho" id="registroConselho" required>
+
+    <label for="telefone">Telefone</label>
+    <input type="text" name="telefone" id="telefone" required>
+
+    <label for="email">E-mail</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="especialidade">Especialidade</label>
+    <select name="especialidade" id="especialidade" required>
+        <option value=""></option>
+        <option value="1">Especialidade 1</option>
+        <option value="2">Especialidade 2</option>
+        <option value="3">Especialidade 3</option>
+    </select>
+
+    <label for="unidade">Unidade</label>
+    <select name="unidade" id="unidade" required>
+        <option value=""></option>
+        <option value="1">Unidade 1</option>
+        <option value="2">Unidade 2</option>
+        <option value="3">Unidade 3</option>
+    </select>
+
+    </div>
+
+    <input type="button" value="Cancelar" (click)="Cancelar()">
+    <input type="submit" value="Salvar">
+
+</form>
