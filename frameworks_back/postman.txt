@@ -1,0 +1,3 @@
+link para acessar end-points no Postman
+
+https://api.postman.com/collections/30298491-dfa512db-8831-4c56-bf56-bc160f5784a5?access_key=PMAT-01HCGBVNXW19WZ0FZNWEP4G58K

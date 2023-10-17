@@ -22,9 +22,7 @@ export class AgendaFormComponent implements IForm<Atendimento>{
 
   save(form: NgForm): void{}
 
-  Cancelar(): void {this.router.navigate([ '/agenda' ])}
-
-  disabled():void {};
+  Cancelar(): void {this.router.navigate([ '/agenda' ])}  
 
 }
 
