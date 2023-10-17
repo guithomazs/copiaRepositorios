@@ -1,113 +1,37 @@
-<main>
-    <div id="comandos">
-        <a routerLink="./form"
-           class="botao"
-           id="add">
-            Adicionar
-        </a>
-        <div>
-            <label for="busca">Busca</label>
-            <input type="search" name="busca" id="busca"
-                   placeholder="Digite para buscar">
-        </div>
-    </div>
-    <!-- Emmet: table>thead+tbody+tfoot -->
-    <table>
-        <thead>
-            <!-- Emmet: tr>th*8 -->
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Registro</th>
-                <th>Especialidade</th>
-                <th>Unidade</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Emmet: tr*5>td{$}+td{x}*6+td>a[href="javascript:void(0)"]{Editar}+a[href="javascript:void(0)"]{Excluir} -->
-            <tr>
-                <td class="fit">1</td>
-                <td>Maria Adelia Serravalle Bezerra</td>
-                <td>CRM/AC 377</td>
-                <td>Cardiologia</td>
-                <td>Unidade A</td>
-                <td>(68) 98205-4704</td>
-                <td>monique.nespoli@uol.com.br</td>
-                <td>
-                    <a href="javascript:void(0)"
-                       class="botao">Editar</a>
-                    <a href="javascript:void(0)"
-                       class="botao excluir">Excluir</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="fit">2</td>
-                <td>Elielson Silveira Andrade</td>
-                <td>CRM/AC 455</td>
-                <td>Cardiologia</td>
-                <td>Unidade B</td>
-                <td>(68) 98085-4910</td>
-                <td>elielson.andrade@gmail.com</td>
-                <td>
-                    <a href="javascript:void(0)"
-                       class="botao">Editar</a>
-                    <a href="javascript:void(0)"
-                       class="botao excluir">Excluir</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="fit">3</td>
-                <td>Davi Jesus Mendes2</td>
-                <td>CRM/AC 123</td>
-                <td>Infectologia</td>
-                <td>Unidade C</td>
-                <td>(68) 98408-5352</td>
-                <td>davi.mendes@yahoo.com</td>
-                <td>
-                    <a href="javascript:void(0)"
-                       class="botao">Editar</a>
-                    <a href="javascript:void(0)"
-                       class="botao excluir">Excluir</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="fit">4</td>
-                <td>Carla da Paixão Valle</td>
-                <td>CRM/AC 234</td>
-                <td>Dermatologia</td>
-                <td>Unidade A</td>
-                <td>(68) 98395-5604</td>
-                <td>carla.valle@gmail.com</td>
-                <td>
-                    <a href="javascript:void(0)"
-                       class="botao">Editar</a>
-                    <a href="javascript:void(0)"
-                       class="botao excluir">Excluir</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="fit">5</td>
-                <td>Neuza Biango Nobrega</td>
-                <td>CRM/AC 232</td>
-                <td>Pediatria</td>
-                <td>Unidade B</td>
-                <td>(68) 98561-6622</td>
-                <td>neuza.nobrega@uol.com.br</td>
-                <td>
-                    <a href="javascript:void(0)"
-                       class="botao">Editar</a>
-                    <a href="javascript:void(0)"
-                       class="botao excluir">Excluir</a>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="8">Total de registros: 5</td>
-            </tr>
-        </tfoot>
-    </table>
-</main>
+<app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Registro</th>
+            <th>Especialidade</th>
+            <th>Unidade</th>
+            <th>Telefone</th>
+            <th>E-mail</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of registros">
+            <td> {{ item.id }}</td>
+            <td> {{ item.nome }}</td>
+            <td> {{ item.registroConselho }}</td>
+            <td> {{ item.especialidade.nome }}</td>
+            <td> {{ item.unidade.nome }}</td>
+            <td> {{ item.telefone }}</td>
+            <td> {{ item.email }}</td>
+            <td>
+                <a href="javascript:void(0)"
+                    class="botao">Editar</a>
+                <a href="javascript:void(0)"
+                    class="botao excluir">Excluir</a>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8">Total de registros: {{ registros.length }}</td>
+        </tr>
+    </tfoot>
+</table>

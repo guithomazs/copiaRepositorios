@@ -5,6 +5,8 @@ import { AgendaFormComponent } from './component/agenda-form/agenda-form.compone
 import { AtendimentoListComponent } from './component/atendimento-list/atendimento-list.component';
 import { ProfissionaisListComponent } from './component/profissionais/profissionais-list/profissionais-list.component';
 import { ProfissionaisFormComponent } from './component/profissionais/profissionais-form/profissionais-form.component';
+import { EspecialidadeListComponent } from './component/especialidade/especialidade-list/especialidade-list.component';
+import { EspecialidadeFormComponent } from './component/especialidade/especialidade-form/especialidade-form.component';
 
 const routes: Routes = [
   { path: 'agenda', component: AgendaListComponent },
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'atendimento', component: AtendimentoListComponent },
   { path: 'profissionais/form', component: ProfissionaisFormComponent },
   { path: 'profissionais', component: ProfissionaisListComponent },
+  { path: 'config/especialidades/form', component: EspecialidadeFormComponent},
+  { path: 'config/especialidades', component: EspecialidadeListComponent},
 ];
 
 @NgModule({

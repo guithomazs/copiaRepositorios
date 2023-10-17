@@ -29,9 +29,8 @@ export class AtendimentoService implements IService<Atendimento>{
     throw new Error('Method not implemented.');
   }
   delete(id: number): Observable<void> {
-    let url = this.apiUrl;
-    url += id;
-    console.log(url);
+    console.log("no servico " + id);
+    let url = this.apiUrl + id;
     return this.http.delete<void>(url);
   }
 }
