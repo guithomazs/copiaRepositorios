@@ -1,1 +1,28 @@
-<p>pacientes-list works!</p>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Data de nascimento</th>
+            <th>Grupo Sanguíneo</th>
+            <th>Sexo</th>
+            <th>CEP</th>
+            <th>Endereço</th>
+            <th>Estado</th>
+            <th>Cidade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item : registros">
+            
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="12">Total de registros: 5</td>
+        </tr>
+    </tfoot>
+</table>
