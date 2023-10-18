@@ -1,16 +1,18 @@
-<form action="#">
+<form (submit)="save(form)" #form="ngForm">
 
     <div class="grid">
 
         <label for="nome">Nome</label>
-        <input type="text" name="nome" id="nome" required>
+        <input type="text" name="nome" id="nome" required
+            [(ngModel)]="registro.nome">
 
         <label for="cep">Endereço</label>
-        <input type="text" name="endereco" id="endereco">
+        <input type="text" name="endereco" id="endereco"
+            [(ngModel)]="registro.endereco">
 
     </div>
 
     <input type="button" value="Cancelar" routerLink="../">
-    <input type="submit" value="Salvar">
+    <input type="submit" value="Salvar" [disabled]="form.disabled">
 
 </form>

@@ -8,7 +8,7 @@
             [compareWith]="compareById">
             <option value="">Selecione</option>
             <option *ngFor="let item of profissionais"
-                    [value]="item">{{ item.nome }}</option>
+                    [ngValue]="item">{{ item.nome }}</option>
         </select>
 
         <label for="data">Data</label>
@@ -40,7 +40,7 @@
                 [compareWith]="compareById">
             <option value="">Selecione</option>
             <option *ngFor="let item of convenios"
-                    [value]="item">{{ item.nome }}</option>
+                    [ngValue]="item">{{ item.nome }}</option>
         </select>
 
         <label for="paciente">Paciente</label>
@@ -49,7 +49,7 @@
                 [compareWith]="compareById">
             <option value="">Selecione</option>
             <option *ngFor="let item of pacientes"
-                    [value]="item">{{ item.nome }}</option>
+                    [ngValue]="item">{{ item.nome }}</option>
         </select>
 
     </div>

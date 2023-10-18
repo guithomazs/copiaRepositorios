@@ -26,7 +26,13 @@ export class UnidadesListComponent implements IList<Unidade>, OnInit{
   }
 
   delete(id: number): void {
-    this.servico.delete(id).subscribe({});
+    if (confirm("Deseja remover a unidade?")) {
+      this.servico.delete(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      });
+    }
   }
 
 }

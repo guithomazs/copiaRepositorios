@@ -27,7 +27,13 @@ export class EspecialidadeListComponent implements IList<Especialidade>, OnInit{
   }
 
   delete(id: number): void {
-    this.servico.delete(id).subscribe({});
+    if (confirm("Deseja excluir a especialidade?")) {
+      this.servico.delete(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      });
+    }
   }
 
 }

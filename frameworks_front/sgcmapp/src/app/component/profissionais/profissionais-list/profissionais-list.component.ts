@@ -25,7 +25,13 @@ export class ProfissionaisListComponent implements IList<Profissional>, OnInit{
     });
   }
   delete(id: number): void {
-    throw new Error('Method not implemented.');
+    if (confirm("Deseja remover o profissional?")) {
+      this.servico.delete(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      });
+    }
   }
 
 }

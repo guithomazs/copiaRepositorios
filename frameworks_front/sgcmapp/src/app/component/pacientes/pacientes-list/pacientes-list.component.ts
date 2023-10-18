@@ -25,7 +25,13 @@ export class PacientesListComponent implements IList<Paciente>, OnInit{
     });
   }
   delete(id: number): void {
-    this.servico.delete(id).subscribe({});
+    if (confirm("Deseja excluir o paciente?")) {
+      this.servico.delete(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      });
+    }
   }
 
 }

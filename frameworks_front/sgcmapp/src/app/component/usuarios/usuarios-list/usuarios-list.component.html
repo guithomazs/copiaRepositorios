@@ -15,13 +15,11 @@
             <td> {{ item.id }}</td>
             <td> {{ item.nomeCompleto }}</td>
             <td> {{ item.nomeUsuario }}</td>
-            <td> {{ item.ativo }}</td>
+            <td> {{ item.ativo ? 'Ativo' : 'Inativo' }}</td>
             <td> {{ item.papel }}</td>
             <td>
-                <a href="javascript:void(0)"
-                    class="botao">Editar</a>
-                <a href="javascript:void(0)"
-                    class="botao excluir"
+                <a class="botao">Editar</a>
+                <a class="botao excluir"
                     (click)="delete(item.id)">Excluir</a>
             </td>
         </tr>

@@ -19,13 +19,22 @@ export class ProfissionalService implements IService<Profissional>{
     }
     return this.http.get<Profissional[]>(url);
   }
+
   getById(id: number): Observable<Profissional> {
-    throw new Error('Method not implemented.');
+    let url = this.apiUrl + id;
+    return this.http.get<Profissional>(url);
   }
+  
   save(objeto: Profissional): Observable<Profissional> {
-    throw new Error('Method not implemented.');
+    let url = this.apiUrl;
+    if (objeto.id){
+      return this.http.put<Profissional>(url, objeto);
+    }
+    return this.http.post<Profissional>(url, objeto);
   }
+  
   delete(id: number): Observable<void> {
-    throw new Error('Method not implemented.');
+    let url = this.apiUrl + id;
+    return this.http.delete<void>(url);
   }
 }

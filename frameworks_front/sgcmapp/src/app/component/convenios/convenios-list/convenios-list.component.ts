@@ -24,7 +24,13 @@ export class ConveniosListComponent implements IList<Convenio>, OnInit{
     });
   }
   delete(id: number): void {
-    this.servico.delete(id).subscribe({});
+    if (confirm("Deseja excluir o convênio?")) {
+      this.servico.delete(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      });
+    }
   }
 
 }

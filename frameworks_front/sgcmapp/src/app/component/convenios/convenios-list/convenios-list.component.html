@@ -22,12 +22,10 @@
             <td> {{ item.representante }}</td>
             <td> {{ item.email }}</td>
             <td> {{ item.telefone }}</td>
-            <td> {{ item.ativo }}</td>
+            <td> {{ item.ativo ? 'Ativo' : 'Inativo' }}</td>
             <td>
-                <a href="javascript:void(0)"
-                    class="botao">Editar</a>
-                <a href="javascript:void(0)"
-                    class="botao excluir"
+                <a class="botao">Editar</a>
+                <a class="botao excluir"
                     (click)="delete(item.id)">Excluir</a>
             </td>
         </tr>

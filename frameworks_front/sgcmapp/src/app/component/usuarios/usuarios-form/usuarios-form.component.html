@@ -1,21 +1,26 @@
-<form action="#">
+<form (submit)="save(form)" #form="ngForm">
 
     <div class="grid">
 
     <label for="nomeCompleto">Nome</label>
-    <input type="text" name="nomeCompleto">
+    <input type="text" name="nomeCompleto"
+        [(ngModel)]="registro.nomeCompleto">
 
     <label for="nomeUsuario">Usuário</label>
-    <input type="text" name="nomeUsuario" required>
+    <input type="text" name="nomeUsuario" required
+        [(ngModel)]="registro.nomeUsuario">
 
     <label for="senha">Senha</label>
-    <input type="password" name="senha" required>
+    <input type="password" name="senha" required
+        [(ngModel)]="registro.senha">
 
     <label for="ativo">Ativo</label>
-    <input type="checkbox" name="ativo">
+    <input type="checkbox" name="ativo"
+        [(ngModel)]="registro.ativo">
 
     <label for="papel">Papel</label>
-    <select name="papel" required>
+    <select name="papel" required
+            [(ngModel)]="registro.papel">
         <option value=""></option>
         <option value="ATENDENTE">ATENDENTE</option>
         <option value="ADMIN">ADMIN</option>
@@ -24,6 +29,6 @@
     </div>
 
     <input type="button" value="Cancelar" routerLink="../">
-    <input type="submit" value="Salvar">
+    <input type="submit" value="Salvar" [disabled]="form.disabled">
 
 </form>

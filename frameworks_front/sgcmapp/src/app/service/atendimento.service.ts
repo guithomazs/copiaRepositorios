@@ -31,9 +31,8 @@ export class AtendimentoService implements IService<Atendimento>{
     let url = this.apiUrl;
     if (objeto.id){
       return this.http.put<Atendimento>(url, objeto);
-    } else {
-      return this.http.post<Atendimento>(url, objeto);
     }
+    return this.http.post<Atendimento>(url, objeto);
   }
   
   delete(id: number): Observable<void> {

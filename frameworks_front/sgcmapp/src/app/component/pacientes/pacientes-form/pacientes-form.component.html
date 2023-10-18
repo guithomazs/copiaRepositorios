@@ -1,21 +1,26 @@
-<form action="#">
+<form (submit)="save(form)" #form="ngForm">
 
     <div class="grid">
 
         <label for="nome">Nome</label>
-        <input type="text" name="nome" id="nome" required>
+        <input type="text" name="nome" id="nome" required
+            [(ngModel)]="registro.nome">
 
         <label for="email">E-mail</label>
-        <input type="email" name="email" id="email">
+        <input type="email" name="email" id="email"
+            [(ngModel)]="registro.email">
 
         <label for="telefone">Telefone</label>
-        <input type="text" name="telefone" id="telefone" required>
+        <input type="text" name="telefone" id="telefone" required
+            [(ngModel)]="registro.telefone">
 
         <label for="dataNascimento">Data de nascimento</label>
-        <input type="date" name="dataNascimento" id="dataNascimento" required>
+        <input type="date" name="dataNascimento" id="dataNascimento" required
+            [(ngModel)]="registro.dataNascimento">
 
         <label for="grupoSanguineo">Grupo Sanguíneo</label>
-        <select name="grupoSanguineo" id="grupoSanguineo">
+        <select name="grupoSanguineo" id="grupoSanguineo"
+                [(ngModel)]="registro.grupoSanguineo">
             <option value=""></option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
@@ -28,20 +33,24 @@
         </select>
 
         <label for="sexo">Sexo</label>
-        <select name="sexo" id="sexo" required>
+        <select name="sexo" id="sexo" required
+                [(ngModel)]="registro.sexo">
             <option value=""></option>
             <option value="M">Masculino</option>
             <option value="F">Feminino</option>
         </select>
 
         <label for="cep">CEP</label>
-        <input type="text" name="cep" id="cep">
+        <input type="text" name="cep" id="cep"
+            [(ngModel)]="registro.cep">
 
         <label for="endereco">Endereço</label>
-        <input type="text" name="endereco" id="endereco">
+        <input type="text" name="endereco" id="endereco"
+        [(ngModel)]="registro.endereco">
 
         <label for="estado">Estado</label>
-        <select name="estado" id="estado">
+        <select name="estado" id="estado"
+                [(ngModel)]="registro.estado">
             <option value="">Selecione</option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
@@ -73,11 +82,12 @@
         </select>
 
         <label for="cidade">Cidade</label>
-        <input type="text" name="cidade" id="cidade">
+        <input type="text" name="cidade" id="cidade"
+            [(ngModel)]="registro.cidade">
 
     </div>
 
     <input type="button" value="Cancelar" routerLink="../">
-    <input type="submit" value="Salvar">
+    <input type="submit" value="Salvar" [disabled]="form.invalid">
 
 </form>

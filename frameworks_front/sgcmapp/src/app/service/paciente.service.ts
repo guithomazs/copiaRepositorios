@@ -24,11 +24,16 @@ export class PacienteService implements IList<Paciente>{
   }
 
   getById(id: number): Observable<Paciente> {
-    throw new Error('Method not implemented.');
+    let url = this.apiUrl + id;
+    return this.http.get<Paciente>(url);
   }
   
   save(objeto: Paciente): Observable<Paciente> {
-    throw new Error('Method not implemented.');
+    let url = this.apiUrl;
+    if (objeto.id){
+      return this.http.put<Paciente>(url, objeto);
+    }
+    return this.http.post<Paciente>(url, objeto);
   }
 
   delete(id: number): Observable<void> {

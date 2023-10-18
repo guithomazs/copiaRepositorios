@@ -27,7 +27,13 @@ export class UsuariosListComponent implements IList<Usuario>, OnInit{
   }
 
   delete(id: number): void {
-    this.servico.delete(id).subscribe({});
+    if (confirm("Deseja excluir o usuário?")) {
+      this.servico.delete(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      });
+    }
   }
 
 }

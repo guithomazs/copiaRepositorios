@@ -51,8 +51,10 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
         this.profissionais = resposta.sort(
           (a, b) => a.nome.localeCompare(b.nome)
         );
+        console.log(this.profissionais);
       }
     });
+
 
     const id = this.route.snapshot.queryParamMap.get('id');
     if (id) {
@@ -71,7 +73,6 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
   compareById = Utils.compareById;
 
   save(form: NgForm): void{
-    console.log(this.registro.paciente)
     this.servico.save(this.registro).subscribe({
       complete: () => {
         this.router.navigate(['/agenda'])
