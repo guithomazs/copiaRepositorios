@@ -25,9 +25,9 @@ public class ProfissionalController implements IController<Profissional> {
     @Autowired
     private ProfissionalService servico;
     
-    public ProfissionalController(ProfissionalService servico) {
-        this.servico = servico;
-    }
+    // public ProfissionalController(ProfissionalService servico) {
+    //     this.servico = servico;
+    // }
 
     @Override
     @GetMapping("/")
@@ -50,6 +50,7 @@ public class ProfissionalController implements IController<Profissional> {
         return new ResponseEntity<>(profissionais, HttpStatus.OK);
     }
 
+    @Override
     @PostMapping("/")
     public ResponseEntity<Profissional> insert(@RequestBody Profissional objeto) {
         Profissional profissionais = servico.save(objeto);

@@ -36,7 +36,7 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
           (a, b) => a.nome.localeCompare(b.nome)
         );
       }
-    })
+    });
     
     this.servicoPaciente.get().subscribe({
       next: (resposta: Paciente[]) => {
@@ -44,7 +44,7 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
           (a, b) => a.nome.localeCompare(b.nome)
         );
       }
-    })
+    });
     
     this.servicoProfissional.get().subscribe({
       next: (resposta: Profissional[]) => {
@@ -63,7 +63,6 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
       })
     }
   }
-;
   
   registro: Atendimento = <Atendimento>{};
   profissionais: Profissional[] = Array<Profissional>();
@@ -72,6 +71,7 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
   compareById = Utils.compareById;
 
   save(form: NgForm): void{
+    console.log(this.registro.paciente)
     this.servico.save(this.registro).subscribe({
       complete: () => {
         this.router.navigate(['/agenda'])

@@ -13,8 +13,13 @@ import br.ufac.sgcmapi.repository.ProfissionalRepository;
 @Service
 public class ProfissionalService implements
 IService<Profissional>{
+
     @Autowired
     private ProfissionalRepository repo; 
+
+    // public ProfissionalService(ProfissionalRepository repo){
+    //     this.repo = repo;
+    // }
 
     @Override
     public List<Profissional> get() {

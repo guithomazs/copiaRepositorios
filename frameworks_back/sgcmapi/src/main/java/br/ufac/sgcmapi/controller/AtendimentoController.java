@@ -27,9 +27,9 @@ public class AtendimentoController implements IController<Atendimento> {
     @Autowired
     private AtendimentoService servico;
 
-    public AtendimentoController(AtendimentoService servico) {
-        this.servico = servico;
-    }
+    // public AtendimentoController(AtendimentoService servico) {
+    //     this.servico = servico;
+    // }
 
     @Override
     @GetMapping("/")
@@ -55,6 +55,7 @@ public class AtendimentoController implements IController<Atendimento> {
     @Override
     @PostMapping("/")
     public ResponseEntity<Atendimento> insert(@RequestBody Atendimento objeto) {
+        System.out.println("mano, me ajuda");
         Atendimento registro = servico.save(objeto);
         return new ResponseEntity<>(registro, HttpStatus.CREATED);
     }
