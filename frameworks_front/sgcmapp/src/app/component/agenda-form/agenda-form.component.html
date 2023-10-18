@@ -1,60 +1,59 @@
-<form action="#" #form>
+<form (submit)="save(form)" #form="ngForm">
 
     <div class="grid">
 
         <label for="profissional">Profissional</label>
-        <select name="profissional" id="profissional" required>
+        <select name="profissional" id="profissional" required
+            [(ngModel)]="registro.profissional"
+            [compareWith]="compareById">
             <option value="">Selecione</option>
-            <option value="1">Profissional A</option>
-            <option value="2">Profissional B</option>
-            <option value="3">Profissional C</option>
-            <option value="4">Profissional D</option>
-            <option value="5">Profissional E</option>
+            <option *ngFor="let item of profissionais"
+                    [value]="item">{{ item.nome }}</option>
         </select>
 
         <label for="data">Data</label>
-        <input type="date" name="data" id="data" required>
+        <input type="date" name="data" id="data" required
+                [(ngModel)]="registro.data">
 
         <label for="hora">Hora</label>
-        <select name="hora" id="hora" required>
+        <select name="hora" id="hora" required
+                [(ngModel)]="registro.hora">
             <option value="">Selecione</option>
-            <option value="14:00">14:00</option>
-            <option value="14:30">14:30</option>
-            <option value="15:00">15:00</option>
-            <option value="15:30">15:30</option>
-            <option value="16:00">16:00</option>
-            <option value="16:30">16:30</option>
-            <option value="17:00" disabled>17:00</option>
-            <option value="17:30">17:30</option>
-            <option value="18:00">18:00</option>
-            <option value="18:30">18:30</option>
-            <option value="19:00">19:00</option>
-            <option value="19:30">19:30</option>
-            <option value="20:00">20:00</option>
+            <option value="14:00:00">14:00</option>
+            <option value="14:30:00">14:30</option>
+            <option value="15:00:00">15:00</option>
+            <option value="15:30:00">15:30</option>
+            <option value="16:00:00">16:00</option>
+            <option value="16:30:00">16:30</option>
+            <option value="17:00:00">17:00</option>
+            <option value="17:30:00">17:30</option>
+            <option value="18:00:00">18:00</option>
+            <option value="18:30:00">18:30</option>
+            <option value="19:00:00">19:00</option>
+            <option value="19:30:00">19:30</option>
+            <option value="20:00:00">20:00</option>
         </select>
 
         <label for="convenio">Convênio</label>
-        <select name="convenio" id="convenio" required>
+        <select name="convenio" id="convenio"
+                [(ngModel)]="registro.convenio"
+                [compareWith]="compareById">
             <option value="">Selecione</option>
-            <option value="1">Convênio A</option>
-            <option value="2">Convênio B</option>
-            <option value="3">Convênio C</option>
-            <option value="4">Convênio D</option>
-            <option value="5">Convênio E</option>
+            <option *ngFor="let item of convenios"
+                    [value]="item">{{ item.nome }}</option>
         </select>
 
         <label for="paciente">Paciente</label>
-        <select name="paciente" id="paciente" required>
+        <select name="paciente" id="paciente" required
+                [(ngModel)]="registro.paciente"
+                [compareWith]="compareById">
             <option value="">Selecione</option>
-            <option value="1">Paciente A</option>
-            <option value="2">Paciente B</option>
-            <option value="3">Paciente C</option>
-            <option value="4">Paciente D</option>
-            <option value="5">Paciente E</option>
+            <option *ngFor="let item of pacientes"
+                    [value]="item">{{ item.nome }}</option>
         </select>
 
     </div>
 
-    <input type="button" value="Cancelar" (click)="Cancelar()">
-    <input type="submit" value="Salvar">
+    <input type="button" value="Cancelar" routerLink="../">
+    <input type="submit" value="Salvar" [disabled]="form.invalid">
 </form>

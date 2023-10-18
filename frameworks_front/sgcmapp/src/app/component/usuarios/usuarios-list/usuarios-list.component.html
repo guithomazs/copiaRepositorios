@@ -1,1 +1,34 @@
-<p>usuarios-list works!</p>
+<app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Usuário</th>
+            <th>Ativo</th>
+            <th>Papel</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of registros">
+            <td> {{ item.id }}</td>
+            <td> {{ item.nomeCompleto }}</td>
+            <td> {{ item.nomeUsuario }}</td>
+            <td> {{ item.ativo }}</td>
+            <td> {{ item.papel }}</td>
+            <td>
+                <a href="javascript:void(0)"
+                    class="botao">Editar</a>
+                <a href="javascript:void(0)"
+                    class="botao excluir"
+                    (click)="delete(item.id)">Excluir</a>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">Total de registros: {{ registros.length }}</td>
+        </tr>
+    </tfoot>
+</table>

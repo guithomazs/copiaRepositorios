@@ -1,1 +1,30 @@
-<p>unidades-list works!</p>
+<app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of registros">
+            <td> {{ item.id }}</td>
+            <td> {{ item.nome }}</td>
+            <td> {{ item.endereco }}</td>
+            <td>
+                <a href="javascript:void(0)"
+                    class="botao">Editar</a>
+                <a href="javascript:void(0)"
+                    class="botao excluir"
+                    (click)="delete(item.id)">Excluir</a>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">Total de registros: {{ registros.length }}</td>
+        </tr>
+    </tfoot>
+</table>

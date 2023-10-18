@@ -15,7 +15,9 @@ export class EspecialidadeListComponent implements IList<Especialidade>, OnInit{
   ngOnInit(): void {
     this.get();
   }
+  
   registros: Especialidade[] = Array<Especialidade>();
+
   get(termoBusca?: string | undefined): void {
     this.servico.get(termoBusca).subscribe({
       next: (resposta: Especialidade[]) => {
@@ -23,6 +25,7 @@ export class EspecialidadeListComponent implements IList<Especialidade>, OnInit{
       }
     });
   }
+
   delete(id: number): void {
     this.servico.delete(id).subscribe({});
   }

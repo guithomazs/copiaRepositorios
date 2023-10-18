@@ -1,1 +1,31 @@
-<p>convenios-form works!</p>
+<form action="#">
+
+    <div class="grid">
+
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome">
+
+        <label for="razaoSocial">Razão Social</label>
+        <input type="text" name="razaoSocial" id="razaoSocial" required>
+
+        <label for="cnpj">CNPJ</label>
+        <input type="text" name="cnpj" id="cnpj" required>
+
+        <label for="representante">Representante</label>
+        <input type="text" name="representante" id="representante" required>
+
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="telefone">Telefone</label>
+        <input type="text" name="telefone" id="telefone" required>
+
+        <label for="ativo">Ativo</label>
+        <input type="checkbox" name="ativo" id="ativo">
+
+    </div>
+
+    <input type="button" value="Cancelar" routerLink="../">
+    <input type="submit" value="Salvar">
+
+</form>

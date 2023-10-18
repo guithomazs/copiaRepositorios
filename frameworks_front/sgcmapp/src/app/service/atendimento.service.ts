@@ -13,6 +13,7 @@ export class AtendimentoService implements IService<Atendimento>{
   constructor(private http: HttpClient) {};
   
   apiUrl: string = environment.API_URL + "/atendimento/";
+  
   get(termoBusca?: string | undefined): Observable<Atendimento[]> {
     let url = this.apiUrl;
     if(termoBusca) {
@@ -20,17 +21,29 @@ export class AtendimentoService implements IService<Atendimento>{
     }
     return this.http.get<Atendimento[]>(url);
   }
+  
   getById(id: number): Observable<Atendimento> {
-    let url = this.apiUrl;
-    url += id;
+    let url = this.apiUrl + id;
     return this.http.get<Atendimento>(url);
   }
+  
   save(objeto: Atendimento): Observable<Atendimento> {
-    throw new Error('Method not implemented.');
+    let url = this.apiUrl;
+    if(objeto.id){
+      return this.http.put<Atendimento>(url, objeto);
+    }
+    console.log(url)
+    console.log(objeto)
+    return this.http.post<Atendimento>(url, objeto);
   }
+  
   delete(id: number): Observable<void> {
-    console.log("no servico " + id);
     let url = this.apiUrl + id;
     return this.http.delete<void>(url);
+  }
+
+  updateStatus(id: number): Observable<Atendimento>{
+    let url = this.apiUrl + "status/" + id;
+    return this.http.put<Atendimento>(url, null);
   }
 }

@@ -1,1 +1,29 @@
-<p>usuarios-form works!</p>
+<form action="#">
+
+    <div class="grid">
+
+    <label for="nomeCompleto">Nome</label>
+    <input type="text" name="nomeCompleto">
+
+    <label for="nomeUsuario">Usuário</label>
+    <input type="text" name="nomeUsuario" required>
+
+    <label for="senha">Senha</label>
+    <input type="password" name="senha" required>
+
+    <label for="ativo">Ativo</label>
+    <input type="checkbox" name="ativo">
+
+    <label for="papel">Papel</label>
+    <select name="papel" required>
+        <option value=""></option>
+        <option value="ATENDENTE">ATENDENTE</option>
+        <option value="ADMIN">ADMIN</option>
+    </select>
+
+    </div>
+
+    <input type="button" value="Cancelar" routerLink="../">
+    <input type="submit" value="Salvar">
+
+</form>

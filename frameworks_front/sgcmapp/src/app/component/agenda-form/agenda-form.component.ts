@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IForm } from '../i-form';
 import { Profissional } from '../model/profissional';
 import { Atendimento } from '../model/atendimento';
 import { Convenio } from '../model/convenio';
 import { Paciente } from '../model/paciente';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ConvenioService } from 'src/app/service/convenio.service';
+import { AtendimentoService } from 'src/app/service/atendimento.service';
+import { PacienteService } from 'src/app/service/paciente.service';
+import { ProfissionalService } from 'src/app/service/profissional.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Utils } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-agenda-form',
@@ -13,16 +18,66 @@ import { Router } from '@angular/router';
   styles: [
   ]
 })
-export class AgendaFormComponent implements IForm<Atendimento>{
-  constructor( private router: Router ) {};
-  registros: Atendimento = <Atendimento>{};
+export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
+  constructor( 
+    private servico: AtendimentoService,
+    private servicoConvenio: ConvenioService,
+    private servicoPaciente: PacienteService,
+    private servicoProfissional: ProfissionalService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+  
+  ngOnInit(): void {
+    
+    this.servicoConvenio.get().subscribe({
+      next: (resposta: Convenio[]) => {
+        this.convenios = resposta.sort(
+          (a, b) => a.nome.localeCompare(b.nome)
+        );
+      }
+    })
+    
+    this.servicoPaciente.get().subscribe({
+      next: (resposta: Paciente[]) => {
+        this.pacientes = resposta.sort(
+          (a, b) => a.nome.localeCompare(b.nome)
+        );
+      }
+    })
+    
+    this.servicoProfissional.get().subscribe({
+      next: (resposta: Profissional[]) => {
+        this.profissionais = resposta.sort(
+          (a, b) => a.nome.localeCompare(b.nome)
+        );
+      }
+    });
+
+    const id = this.route.snapshot.queryParamMap.get('id');
+    if (id) {
+      this.servico.getById(+id).subscribe({
+        next: (resposta: Atendimento) => {
+          this.registro = resposta;
+        }
+      })
+    }
+  }
+;
+  
+  registro: Atendimento = <Atendimento>{};
   profissionais: Profissional[] = Array<Profissional>();
   convenios: Convenio[] = Array<Convenio>();
   pacientes: Paciente[] = Array<Paciente>();
+  compareById = Utils.compareById;
 
-  save(form: NgForm): void{}
-
-  Cancelar(): void {this.router.navigate([ '/agenda' ])}  
+  save(form: NgForm): void{
+    this.servico.save(this.registro).subscribe({
+      complete: () => {
+        this.router.navigate(['/agenda'])
+      }
+    })
+  } 
 
 }
 
