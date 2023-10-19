@@ -30,7 +30,9 @@
             <td>{{ item.estado }}</td>
             <td>{{ item.endereco }}</td>
             <td>
-                <a class="botao">Editar</a>
+                <a class="botao"
+                routerLink="./form"
+                [queryParams]="{id: item.id}">Editar</a>
                 <a class="botao excluir"
                     (click)="delete(item.id)">Excluir</a>
             </td>

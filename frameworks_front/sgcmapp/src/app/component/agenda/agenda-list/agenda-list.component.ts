@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IList } from '../i-list';
-import { Atendimento } from '../model/atendimento';
+import { IList } from '../../i-list';
+import { Atendimento } from '../../model/atendimento';
 import { AtendimentoService } from 'src/app/service/atendimento.service';
 
 @Component({

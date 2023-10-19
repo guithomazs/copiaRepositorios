@@ -3,7 +3,7 @@ import { Usuario } from '../../model/usuario';
 import { IForm } from '../../i-form';
 import { NgForm } from '@angular/forms';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-form',
@@ -14,8 +14,20 @@ export class UsuariosFormComponent implements IForm<Usuario>{
 
   constructor(
     private servico: UsuarioService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private route: ActivatedRoute
+    ) {}
+  
+  ngOnInit(): void {
+    const id = this.route.snapshot.queryParamMap.get('id');
+    if (id) {
+      this.servico.getById(+id).subscribe({
+        next: (resposta: Usuario) => {
+          this.registro = resposta;
+        }
+      })
+    }
+  }
   
   registro: Usuario = <Usuario>{};
   

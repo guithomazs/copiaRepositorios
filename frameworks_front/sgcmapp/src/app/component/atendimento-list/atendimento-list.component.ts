@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IList } from '../i-list';
 import { Atendimento } from '../model/atendimento';
-import { environment } from 'src/environments/environment.development';
 import { AtendimentoService } from 'src/app/service/atendimento.service';
 
 @Component({
@@ -12,24 +11,37 @@ import { AtendimentoService } from 'src/app/service/atendimento.service';
 })
 export class AtendimentoListComponent implements IList<Atendimento>, OnInit{
 
-  constructor(private servico: AtendimentoService) {};
-
+  constructor (private servico: AtendimentoService) {}
+  
   ngOnInit(): void {
-      this.get();
+    this.get();
   }
 
-  apiUrl: string = environment.API_URL + "/config/especialidade/";
-  
-  registros: Atendimento[]  = Array<Atendimento>();;
-  get(termoBusca?: string | undefined): void {
+  registros: Atendimento[] = Array<Atendimento>();
+  status: string[] = ['CHEGADA', 'ATENDIMENTO'];
+
+  get(termoBusca?: string | undefined): void{
     this.servico.get(termoBusca).subscribe({
       next: (resposta: Atendimento[]) => {
-        this.registros = resposta;
+        this.registros = resposta.filter(item => {
+          return this.status.includes(item.status);
+        });
       }
     });
   }
-  delete(id: number): void {
-    this.servico.delete(id).subscribe({});
+  
+  delete(id: number): void{
+    throw new Error('method not implemented.');
   }
 
+  updateStatus(id: number): void{
+    if (confirm('Confirma alteração no status do agendamento?')){
+      this.servico.updateStatus(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      });
+    }
+  }
+  
 }

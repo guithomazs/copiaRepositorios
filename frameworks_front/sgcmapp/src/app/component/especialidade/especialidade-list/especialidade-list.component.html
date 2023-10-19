@@ -12,7 +12,9 @@
             <td> {{ item.id }}</td>
             <td> {{ item.nome }}</td>
             <td>
-                <a class="botao">Editar</a>
+                <a class="botao"
+                routerLink="./form"
+                [queryParams]="{id: item.id}">Editar</a>
                 <a class="botao excluir"
                     (click)="delete(item.id)">Excluir</a>
             </td>

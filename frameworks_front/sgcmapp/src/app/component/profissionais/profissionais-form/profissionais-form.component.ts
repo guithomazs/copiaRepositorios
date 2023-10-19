@@ -41,6 +41,15 @@ export class ProfissionaisFormComponent implements IForm<Profissional>, OnInit{
         );
       }
     });
+    
+    const id = this.route.snapshot.queryParamMap.get('id');
+    if (id) {
+      this.servico.getById(+id).subscribe({
+        next: (resposta: Profissional) => {
+          this.registro = resposta;
+        }
+      })
+    }
   }
   
   registro: Profissional = <Profissional>{};

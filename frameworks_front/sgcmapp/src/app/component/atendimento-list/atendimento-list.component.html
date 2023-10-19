@@ -1,4 +1,4 @@
-<app-barra-comandos></app-barra-comandos>
+<app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
 <table>
     <thead>
         <tr>
@@ -8,74 +8,30 @@
             <th>Profissional</th>
             <th>Unidade</th>
             <th>Convênio</th>
-            <th>Atendimento</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class="fit">10/04/2023</td>
-            <td class="fit">14:00</td>
-            <td>Paciente A</td>
-            <td>Profissional A</td>
-            <td>Unidade A</td>
-            <td>Unimed</td>
+        <tr *ngFor="let item of registros">
+            <td class="fit">{{ item.data | date:'dd/MM/yyyy' }}</td>
+            <td class="fit">{{ item.hora | slice:0:5 }}</td>
+            <td>{{ item.paciente.nome }}</td>
+            <td>{{ item.profissional.nome }}</td>
+            <td>{{ item.profissional.unidade.nome }}</td>
+            <td>{{ item.convenio?.nome ? item.convenio?.nome : "Nenhum" }}</td>
             <td>
-                <a href="javascript:void(0)" class="botao iniciar inativo">Iniciar</a>
-                <a href="javascript:void(0)" class="botao finalizar excluir">Finalizar</a>
-            </td>
-        </tr>
-        <tr>
-            <td class="fit">10/04/2023</td>
-            <td class="fit">14:30</td>
-            <td>Paciente B</td>
-            <td>Profissional B</td>
-            <td>Unidade B</td>
-            <td>Aliança</td>
-            <td>
-                <a href="javascript:void(0)" class="botao iniciar">Iniciar</a>
-                <a href="javascript:void(0)" class="botao finalizar excluir inativo">Finalizar</a>
-            </td>
-        </tr>
-        <tr>
-            <td class="fit">10/04/2023</td>
-            <td class="fit">15:00</td>
-            <td>Paciente C</td>
-            <td>Profissional C</td>
-            <td>Unidade C</td>
-            <td>Unimed</td>
-            <td>
-                <a href="javascript:void(0)" class="botao iniciar">Iniciar</a>
-                <a href="javascript:void(0)" class="botao finalizar excluir inativo">Finalizar</a>
-            </td>
-        </tr>
-        <tr>
-            <td class="fit">10/04/2023</td>
-            <td class="fit">15:30</td>
-            <td>Paciente D</td>
-            <td>Profissional D</td>
-            <td>Unidade D</td>
-            <td></td>
-            <td>
-                <a href="javascript:void(0)" class="botao iniciar">Iniciar</a>
-                <a href="javascript:void(0)" class="botao finalizar excluir inativo">Finalizar</a>
-            </td>
-        </tr>
-        <tr>
-            <td class="fit">10/04/2023</td>
-            <td class="fit">16:00</td>
-            <td>Paciente E</td>
-            <td>Profissional E</td>
-            <td>Unidade E</td>
-            <td></td>
-            <td>
-                <a href="javascript:void(0)" class="botao iniciar">Iniciar</a>
-                <a href="javascript:void(0)" class="botao finalizar excluir inativo">Finalizar</a>
+                <a class="botao iniciar" 
+                    (click)="updateStatus(item.id)"
+                    [ngClass]="{'inativo': item.status == 'ATENDIMENTO'}">Iniciar</a>
+                <a class="botao finalizar excluir"
+                    (click)="updateStatus(item.id)"
+                    [ngClass]="{'inativo': item.status == 'CHEGADA'}">Finalizar</a>
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="7">Total de registros: 5</td>
+            <td colspan="7">Total de registros: {{ registros.length }}</td>
         </tr>
     </tfoot>
 </table>
