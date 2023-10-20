@@ -4,6 +4,8 @@ import { Convenio } from '../../model/convenio';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConvenioService } from 'src/app/service/convenio.service';
+import { AlertaService } from 'src/app/service/alerta.service';
+import { ETipoAlerta } from '../../model/e-tipo-alerta';
 
 @Component({
   selector: 'app-convenios-form',
@@ -14,6 +16,7 @@ export class ConveniosFormComponent implements IForm<Convenio>, OnInit{
 
   constructor(
     private servico: ConvenioService,
+    private servicoALerta: AlertaService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -35,6 +38,10 @@ export class ConveniosFormComponent implements IForm<Convenio>, OnInit{
     this.servico.save(this.registro).subscribe({
       complete: () => {
         this.router.navigate(['/convenios'])
+        this.servicoALerta.enviarAlerta({
+          tipo: ETipoAlerta.SUCESSO,
+          mensagem: "Operação realizada com sucesso."
+        });
       }
     })
   }

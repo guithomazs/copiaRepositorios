@@ -5,15 +5,18 @@
         <label for="profissional">Profissional</label>
         <select name="profissional" id="profissional" required
             [(ngModel)]="registro.profissional"
-            [compareWith]="compareById">
+            [compareWith]="compareById"
+            (change)="getHorarios(+profissional.value)" #profissional>
             <option value="">Selecione</option>
             <option *ngFor="let item of profissionais"
-                    [ngValue]="item">{{ item.nome }}</option>
+                    [ngValue]="item"
+                    [value]="item.id">{{ item.nome }}</option>
         </select>
 
         <label for="data">Data</label>
         <input type="date" name="data" id="data" required
-                [(ngModel)]="registro.data">
+                [(ngModel)]="registro.data"
+                (change)="getHorarios(data.value)" #data>
 
         <label for="hora">Hora</label>
         <select name="hora" id="hora" required

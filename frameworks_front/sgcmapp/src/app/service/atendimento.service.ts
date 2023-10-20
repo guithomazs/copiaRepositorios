@@ -21,6 +21,11 @@ export class AtendimentoService implements IService<Atendimento>{
     }
     return this.http.get<Atendimento[]>(url);
   }
+
+  getHorarios(id: number, data: string): Observable<string[]>{
+    let url = this.apiUrl + 'horarios/' + id + '/' + data;
+    return this.http.get<string[]>(url);
+  }
   
   getById(id: number): Observable<Atendimento> {
     let url = this.apiUrl + id;

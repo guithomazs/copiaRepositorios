@@ -4,6 +4,8 @@ import { IForm } from '../../i-form';
 import { NgForm } from '@angular/forms';
 import { PacienteService } from 'src/app/service/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertaService } from 'src/app/service/alerta.service';
+import { ETipoAlerta } from '../../model/e-tipo-alerta';
 
 @Component({
   selector: 'app-pacientes-form',
@@ -13,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PacientesFormComponent implements IForm<Paciente>{
   constructor(
     private servico: PacienteService,
+    private servicoALerta: AlertaService,
     private router: Router,
     private route: ActivatedRoute
     ) {}
@@ -33,7 +36,11 @@ export class PacientesFormComponent implements IForm<Paciente>{
   save(form: NgForm): void{
     this.servico.save(this.registro).subscribe({
       complete: () => {
-        this.router.navigate(['/pacientes/'])
+        this.router.navigate(['/pacientes/']);
+        this.servicoALerta.enviarAlerta({
+          tipo: ETipoAlerta.SUCESSO,
+          mensagem: "Operação realizada com sucesso."
+        });
       }
     })
 

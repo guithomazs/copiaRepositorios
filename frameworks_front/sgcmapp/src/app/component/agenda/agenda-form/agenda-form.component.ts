@@ -53,7 +53,6 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
         this.profissionais = resposta.sort(
           (a, b) => a.nome.localeCompare(b.nome)
         );
-        console.log(this.profissionais);
       }
     });
 
@@ -67,7 +66,36 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
       })
     }
   }
+
+  opcoes = [
+    "14:00:00", "14:30:00", "15:00:00", 
+    "15:30:00", "16:00:00", "16:30:00", 
+    "17:00:00", "17:30:00", "18:00:00", 
+    "18:30:00", "19:00:00", "19:30:00", "20:00:00"
+  ]
+  ocupados: string[] = Array<string>();
+
+  getHorarios(valor: string | number): void {
+    if (typeof valor === "number"){
+      this.selectedId = valor;
+    } else {
+      this.selectedDate = valor;
+    }
+    
+    if(this.selectedId && this.selectedDate){
+      this.servico.getHorarios(this.selectedId, this.selectedDate).subscribe({
+        next: (resposta: string[]) => {
+          console.log('ID SELECIONADO -> ' + this.selectedId)
+          console.log('DATA SELECIONADA -> ' + this.selectedDate)
+          console.log(this.ocupados);
+          this.ocupados = resposta;
+        }
+      })
+    }
+  }
   
+  selectedId: number | null = null;
+  selectedDate: string | null = null;
   registro: Atendimento = <Atendimento>{};
   profissionais: Profissional[] = Array<Profissional>();
   convenios: Convenio[] = Array<Convenio>();

@@ -19,7 +19,12 @@ export class ConveniosListComponent implements IList<Convenio>, OnInit{
   get(termoBusca?: string | undefined): void {
     this.servico.get(termoBusca).subscribe({
       next: (resposta: Convenio[]) => {
+        // caso queira alterar na lista de convênios para que ela exiba
+        // somente os ativos, basta inverter essas linhas, no caso comentar a de baixo
+        // e descomentar as outras.
         this.registros = resposta;
+        // this.registros = resposta.filter(item => {
+        //   return item.ativo;
       }
     });
   }

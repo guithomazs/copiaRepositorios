@@ -19,12 +19,12 @@ public class AtendimentoService implements IService<Atendimento> {
     private AtendimentoRepository repo;
     private ProfissionalService servicoProfissional;
 
-    // public AtendimentoService(
-    //         AtendimentoRepository repo,
-    //         ProfissionalService servicoProfissional) {
-    //     this.repo = repo;
-    //     this.servicoProfissional = servicoProfissional;
-    // }
+    public AtendimentoService(
+            AtendimentoRepository repo,
+            ProfissionalService servicoProfissional) {
+        this.repo = repo;
+        this.servicoProfissional = servicoProfissional;
+    }
 
     @Override
     public List<Atendimento> get() {

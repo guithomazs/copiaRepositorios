@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Especialidade } from '../../model/especialidade';
 import { Unidade } from '../../model/unidade';
 import { Utils } from 'src/app/utils/utils';
+import { AlertaService } from 'src/app/service/alerta.service';
+import { ETipoAlerta } from '../../model/e-tipo-alerta';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class ProfissionaisFormComponent implements IForm<Profissional>, OnInit{
     private servico: ProfissionalService,
     private servicoEspecialidade: EspecialidadeService,
     private servicoUnidade: UnidadeService,
+    private servicoALerta: AlertaService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -60,7 +63,11 @@ export class ProfissionaisFormComponent implements IForm<Profissional>, OnInit{
   save(form: NgForm): void {
     this.servico.save(this.registro).subscribe({
       complete: () => {
-        this.router.navigate(['/profissionais'])
+        this.router.navigate(['/profissionais']);
+        this.servicoALerta.enviarAlerta({
+          tipo: ETipoAlerta.SUCESSO,
+          mensagem: "Operação realizada com sucesso."
+        });
       }
     })
   };

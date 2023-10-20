@@ -18,7 +18,13 @@
             <td>{{ item.paciente.nome }}</td>
             <td>{{ item.profissional.nome }}</td>
             <td>{{ item.profissional.unidade.nome }}</td>
-            <td>{{ item.convenio?.nome ? item.convenio?.nome : "Nenhum" }}</td>
+            <td>{{ 
+                item.convenio?.nome 
+                    ? 
+                        item.convenio?.ativo ? item.convenio?.nome : "Inativo" 
+                    : 
+                        "Nenhum"
+                }}</td>
             <td>
                 <a class="botao chegada" 
                     (click)="updateStatus(item.id)"
