@@ -17,5 +17,10 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, Lo
            "INNER JOIN Especialidade e ON e.id = p.especialidade " +
            "WHERE e.nome like %?1%")
     List<String[]> getProfessionalsBySpecialities(String nomeEspecialidade);
+    
+    @Query("SELECT e, p, (SELECT count(*) FROM Especialidade e2) total FROM Especialidade e " +
+           "LEFT JOIN Profissional p ON e.id = p.especialidade " +
+           "WHERE e.nome like %?1%")
+    List<Object[]> getProfessionalsBySpecialities_2(String nomeEspecialidade);
 
 }

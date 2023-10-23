@@ -6,11 +6,11 @@
         <select name="profissional" id="profissional" required
             [(ngModel)]="registro.profissional"
             [compareWith]="compareById"
-            (change)="getHorarios(+profissional.value)" #profissional>
+            (change)="getHorarios()" #profissional>
             <option value="">Selecione</option>
             <option *ngFor="let item of profissionais"
                     [ngValue]="item"
-                    [value]="item.id">{{ item.nome }}</option>
+                    >{{ item.nome }}</option>
         </select>
 
         <label for="data">Data</label>
@@ -19,22 +19,12 @@
                 (change)="getHorarios(data.value)" #data>
 
         <label for="hora">Hora</label>
-        <select name="hora" id="hora" required
+        <select name="hora" id="hora" required #ngSelectComponent
                 [(ngModel)]="registro.hora">
             <option value="">Selecione</option>
-            <option value="14:00:00">14:00</option>
-            <option value="14:30:00">14:30</option>
-            <option value="15:00:00">15:00</option>
-            <option value="15:30:00">15:30</option>
-            <option value="16:00:00">16:00</option>
-            <option value="16:30:00">16:30</option>
-            <option value="17:00:00">17:00</option>
-            <option value="17:30:00">17:30</option>
-            <option value="18:00:00">18:00</option>
-            <option value="18:30:00">18:30</option>
-            <option value="19:00:00">19:00</option>
-            <option value="19:30:00">19:30</option>
-            <option value="20:00:00">20:00</option>
+            <option *ngFor="let horario of horarios" 
+                [disabled]="ocupados.includes(horario)"
+                [ngValue]="horario + ':00'">{{ horario }}</option>
         </select>
 
         <label for="convenio">Convênio</label>

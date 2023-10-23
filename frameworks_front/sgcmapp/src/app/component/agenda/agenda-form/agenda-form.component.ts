@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'src/app/utils/utils';
 import { AlertaService } from 'src/app/service/alerta.service';
 import { ETipoAlerta } from '../../model/e-tipo-alerta';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-agenda-form',
@@ -27,11 +28,11 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
     private servicoProfissional: ProfissionalService,
     private servicoALerta: AlertaService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private datePipe: DatePipe
   ) {}
   
   ngOnInit(): void {
-    
     this.servicoConvenio.get().subscribe({
       next: (resposta: Convenio[]) => {
         this.convenios = resposta.sort(
@@ -65,37 +66,11 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
         }
       })
     }
-  }
 
-  opcoes = [
-    "14:00:00", "14:30:00", "15:00:00", 
-    "15:30:00", "16:00:00", "16:30:00", 
-    "17:00:00", "17:30:00", "18:00:00", 
-    "18:30:00", "19:00:00", "19:30:00", "20:00:00"
-  ]
-  ocupados: string[] = Array<string>();
-
-  getHorarios(valor: string | number): void {
-    if (typeof valor === "number"){
-      this.selectedId = valor;
-    } else {
-      this.selectedDate = valor;
-    }
-    
-    if(this.selectedId && this.selectedDate){
-      this.servico.getHorarios(this.selectedId, this.selectedDate).subscribe({
-        next: (resposta: string[]) => {
-          console.log('ID SELECIONADO -> ' + this.selectedId)
-          console.log('DATA SELECIONADA -> ' + this.selectedDate)
-          console.log(this.ocupados);
-          this.ocupados = resposta;
-        }
-      })
-    }
+    let myDate = new Date()
+    this.diaAtual = <string>this.datePipe.transform(myDate, 'yyyy-MM-dd');
   }
   
-  selectedId: number | null = null;
-  selectedDate: string | null = null;
   registro: Atendimento = <Atendimento>{};
   profissionais: Profissional[] = Array<Profissional>();
   convenios: Convenio[] = Array<Convenio>();
@@ -113,6 +88,54 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit{
       }
     })
   } 
+  
+  diaAtual: String = String();
+  horarios: string[] = Array<string>();
+  selectedId: number | undefined;
+  selectedDate: string | undefined;
+  ocupados: string[] = Array<string>();
+  
+  getHorarios(data?: string): void {
+
+    this.registro.hora = "";
+    this.horarios = Array<string>();
+
+    if(data){
+      this.selectedDate = data;
+    } else {
+      this.selectedId = this.registro.profissional.id;
+    }
+    
+    if(this.verifyDate() && this.selectedId){
+      this.horarios = [
+        "14:00", "14:30", "15:00", 
+        "15:30", "16:00", "16:30", 
+        "17:00", "17:30", "18:00", 
+        "18:30", "19:00", "19:30", "20:00"
+      ]    
+    
+      this.servico.getHorarios(this.selectedId, <string>this.selectedDate).subscribe({
+        next: (resposta: string[]) => {
+          this.ocupados = resposta;
+        }
+      })
+    }
+  }
+
+  verifyDate(): boolean {
+    if(this.selectedDate){
+      if(this.selectedDate <= this.diaAtual){
+        this.selectedDate = "";
+        this.registro.data = "";
+        this.servicoALerta.enviarAlerta({
+          tipo: ETipoAlerta.ERRO,
+          mensagem: "O dia marcado não pode ser menor que o dia atual."
+        })
+        return false
+      }
+      return true
+    }
+    return false
+  }
 
 }
-

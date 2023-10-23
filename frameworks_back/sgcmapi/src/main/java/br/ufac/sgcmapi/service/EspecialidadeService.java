@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufac.sgcmapi.model.Especialidade;
+import br.ufac.sgcmapi.model.EspecialidadeProfissional;
+import br.ufac.sgcmapi.model.Profissional;
 import br.ufac.sgcmapi.repository.EspecialidadeRepository;
 
 @Service
@@ -58,6 +60,23 @@ public class EspecialidadeService implements IService<Especialidade> {
             map.get((String)(objeto[0])).add((String)(objeto[1]));
         }
         return map;
+
+    }
+    
+    public List<EspecialidadeProfissional> getProfessionalsBySpecialities_2(String nomeEspecialidade){
+        List<Object[]> professionals = repo.getProfessionalsBySpecialities_2(nomeEspecialidade);
+        List<EspecialidadeProfissional> result = new ArrayList<>();
+        EspecialidadeProfissional lastEspecialidade = null;
+
+        for (Object[] objeto: professionals) {
+            Especialidade esp = (Especialidade)objeto[0];
+            if (lastEspecialidade == null || lastEspecialidade.getId() != esp.getId()){
+                lastEspecialidade = new EspecialidadeProfissional(esp.getId(), esp.getNome());
+                result.add(lastEspecialidade);
+            }
+            lastEspecialidade.addProfissional((Profissional)objeto[1]);
+        }
+        return result;
 
     }
       

@@ -23,6 +23,7 @@ import { UsuariosListComponent } from './component/usuarios/usuarios-list/usuari
 import { UsuariosFormComponent } from './component/usuarios/usuarios-form/usuarios-form.component';
 import { AlertaComponent } from './component/alerta/alerta.component';
 import { ErroInterceptor } from './interceptor/erro.interceptor';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ErroInterceptor } from './interceptor/erro.interceptor';
     HttpClientModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ErroInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErroInterceptor, multi: true },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

@@ -13,15 +13,20 @@ export class EspecialidadeListComponent implements IList<Especialidade>, OnInit{
   constructor (private servico: EspecialidadeService) {}
   
   ngOnInit(): void {
-    this.get();
+    this.get();    
   }
   
+  total: number = -1;
   registros: Especialidade[] = Array<Especialidade>();
+  showing:number[] = Array<number>();
 
   get(termoBusca?: string | undefined): void {
-    this.servico.get(termoBusca).subscribe({
+    this.servico.getProfessionals(termoBusca).subscribe({
       next: (resposta: Especialidade[]) => {
         this.registros = resposta;
+        if(this.total < 0){
+          this.total = resposta.length;
+        }
       }
     });
   }
@@ -34,6 +39,18 @@ export class EspecialidadeListComponent implements IList<Especialidade>, OnInit{
         }
       });
     }
+  }
+
+  showSubTable(id: number): void {
+    if (this.showing.indexOf(id) === -1) {
+      this.showing.push(id);
+    } else {
+      this.showing.splice(this.showing.indexOf(id), 1);
+    }
+  }
+
+  isShowing(id: number): boolean {
+    return this.showing.indexOf(id)!== -1;
   }
 
 }

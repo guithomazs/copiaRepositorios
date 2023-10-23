@@ -1,7 +1,6 @@
 package br.ufac.sgcmapi.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufac.sgcmapi.model.Especialidade;
+import br.ufac.sgcmapi.model.EspecialidadeProfissional;
 import br.ufac.sgcmapi.service.EspecialidadeService;
 
 @RestController
@@ -67,15 +67,27 @@ public class EspecialidadeController implements IController<Especialidade> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
  
+    // @GetMapping("/profissionais")
+    // public ResponseEntity<Map<String, List<String>>> getProfessionalsBySpecialities() {
+    //     Map<String, List<String>> professionals = servico.getProfessionalsBySpecialities("");
+    //     return new ResponseEntity<>(professionals, HttpStatus.OK);
+    // }
+
+    // @GetMapping("/profissionais/{nomeEspecialidade}")
+    // public ResponseEntity<Map<String, List<String>>> getSpecialityProfessionals(@PathVariable("nomeEspecialidade") String nomeEspecialidade) {
+    //     Map<String, List<String>> professionals = servico.getProfessionalsBySpecialities(nomeEspecialidade);
+    //     return new ResponseEntity<>(professionals, HttpStatus.OK);
+    // }
+
     @GetMapping("/profissionais")
-    public ResponseEntity<Map<String, List<String>>> getProfessionalsBySpecialities() {
-        Map<String, List<String>> professionals = servico.getProfessionalsBySpecialities("");
+    public ResponseEntity<List<EspecialidadeProfissional>> getProfessionalsBySpecialities() {
+        List<EspecialidadeProfissional> professionals = servico.getProfessionalsBySpecialities_2("");
         return new ResponseEntity<>(professionals, HttpStatus.OK);
     }
 
     @GetMapping("/profissionais/{nomeEspecialidade}")
-    public ResponseEntity<Map<String, List<String>>> getSpecialityProfessionals(@PathVariable("nomeEspecialidade") String nomeEspecialidade) {
-        Map<String, List<String>> professionals = servico.getProfessionalsBySpecialities(nomeEspecialidade);
+    public ResponseEntity<List<EspecialidadeProfissional>> getSpecialityProfessionals(@PathVariable("nomeEspecialidade") String nomeEspecialidade) {
+        List<EspecialidadeProfissional> professionals = servico.getProfessionalsBySpecialities_2(nomeEspecialidade);
         return new ResponseEntity<>(professionals, HttpStatus.OK);
     }
     

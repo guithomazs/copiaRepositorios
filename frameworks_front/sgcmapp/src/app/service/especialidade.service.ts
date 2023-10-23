@@ -27,6 +27,11 @@ export class EspecialidadeService implements IService<Especialidade>{
     return this.http.get<Especialidade>(url);
   }
 
+  getProfessionals(termoBusca?: string | undefined): Observable<Especialidade[]> {
+    let url = this.apiUrl + "profissionais" + (termoBusca ? "/" + termoBusca : "");
+    return this.http.get<Especialidade[]>(url);
+  }
+
   save(objeto: Especialidade): Observable<Especialidade> {
     let url = this.apiUrl;
     if(objeto.id){
