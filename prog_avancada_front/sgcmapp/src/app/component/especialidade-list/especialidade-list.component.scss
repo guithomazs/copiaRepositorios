@@ -1,0 +1,67 @@
+table {
+    width: 98%;
+    border-spacing: 0.2em;
+    /* Responsivo */
+    overflow: hidden;
+    margin: 0 0.5em;
+    align-self: center;
+    max-height: 500px;
+    display: block;
+    // border-collapse: separate;
+}
+
+table thead {
+    display: inline-block;
+    background-color: aquamarine;
+    width: 100%;
+    background-color: var(--cor-fundo-tabela);
+}
+
+table thead tr {
+    background-color: aquamarine
+}
+
+table thead > * { 
+    background-color: aquamarine
+}
+
+table tbody{
+    width: 100%;
+    display: block;
+    overflow: auto;
+    max-height: 400px ;
+}
+
+table tfoot {
+    width: 100%;
+    display: inline-block;
+}
+
+table tfoot * {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+}
+
+table td, table th {
+    padding: 0.5em;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: var(--cor-fundo-tabela);
+}
+
+table tbody tr:nth-child(even) {
+    background-color: var(--cor-fundo-tabela);
+}
+
+table tbody tr:hover {
+    background-color: var(--cor-fundo-tabela);
+}
+
+table tbody tr td:last-child,
+table tbody tr td.fit {
+    text-align: center;
+    width: 1%;
+    white-space: nowrap;
+}
