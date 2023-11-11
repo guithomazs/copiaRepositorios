@@ -32,7 +32,9 @@
 							"src/styles.scss"
 						],
 						"scripts": [
-							"src/assets/js/script.js"
+							"src/assets/js/jquery-3.7.1.js",
+							"src/assets/js/script.js",
+							"src/assets/js/editTable.js"
 						]
 					},
 					"configurations": {

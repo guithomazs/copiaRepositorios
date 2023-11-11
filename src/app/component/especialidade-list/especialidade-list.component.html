@@ -1,7 +1,9 @@
 <app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
+<script src="../../../assets/js/jquery-3.7.1.js"></script>
+<script src="../../../assets/js/editTable.js" defer></script>
 <table>
     <thead>
-        <tr #theHeaderRow>
+        <tr>
             <th>ID</th>
             <th>Nome</th>
             <th>Ações</th>
@@ -20,9 +22,12 @@
             </td>
         </tr>
     </tbody>
-    <tfoot>
+    <!-- <tfoot>
         <tr>
             <td colspan="3">Total de registros: {{ registros.length }}</td>
         </tr>
-    </tfoot>
+    </tfoot> -->
 </table>
+<div id="tableFooter">
+    Total de registros: {{ registros.length }}
+</div>

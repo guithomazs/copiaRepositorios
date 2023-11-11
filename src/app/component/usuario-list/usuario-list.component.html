@@ -1,14 +1,12 @@
 <app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
 <table>
     <thead>
-        <tr #theHeaderRow>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Usuário</th>
-            <th>Ativo</th>
-            <th>Papel</th>
-            <th>Ações</th>
-        </tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Usuário</th>
+        <th>Ativo</th>
+        <th>Papel</th>
+        <th>Ações</th>
     </thead>
     <tbody>
         <tr *ngFor="let item of registros">
@@ -26,9 +24,12 @@
             </td>
         </tr>
     </tbody>
-    <tfoot>
+    <!-- <tfoot>
         <tr>
             <td colspan="6">Total de registros: {{ registros.length }}</td>
         </tr>
-    </tfoot>
+    </tfoot> -->
 </table>
+<div id="tableFooter">
+    Total de registros: {{ registros.length }}
+</div>

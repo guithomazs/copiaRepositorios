@@ -206,31 +206,44 @@ input, select {
 
 /* Tabela */
 
+div#tableFooter {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid black;
+    margin-top: 0.5em;
+    padding: 0.5em;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
 table {
     width: 100%;
     border-spacing: 0.2em;
-    // background-color: aqua;
-    
-    display: inline-block;
-    
-    // overflow: hidden;
+
+    // essas linhas abaixo fazem ele possuir uma scrollbar
+    display: block;
+    overflow: auto;
+    position: relative;
+    max-height: 500px;
+
+    thead {
+        position: sticky;
+
+        // edite a linha de baixo para top: 0 para que ele vá para o topo da tabela ao invés de permanecer onde está.
+        top: 0.2rem;
+        z-index: 1;
+    }
 
     td, th {
         padding: 0.5em;
     }
-    td {
-        word-break: break-all;
-    }
     th {
+        /* Propriedade definida no arquivo do tema */
+        /* background-color: #003366; */
         color: white;
     }
     tbody {
-        width: 100%;
-        // background-color: red;
-        display: block;
-        overflow-y: auto;
-        max-height: 450px;
-        
         tr {
             &:nth-child(odd) {
                 background-color: #c6d4e2;
@@ -246,15 +259,18 @@ table {
                 &.fit {
                     text-align: center;
                     width: 1%;
-                    min-width: 20px;
                     white-space: nowrap;
                 }
             }
         }
     }
     tfoot {
-        width: 100%;
-        display: table;
+        display: table-row-group;
+        // position: sticky;
+        // inset-block-end: 0;
+        // opacity: 1;
+
+        // background-color: white;
         td {
             /* Propriedade definida no arquivo do tema */
             /* border-top: 1px solid #003366; */

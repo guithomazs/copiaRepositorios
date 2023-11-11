@@ -1,7 +1,7 @@
 <app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
 <table>
     <thead>
-        <tr #theHeaderRow>
+        <tr>
             <th>ID</th>
             <th>Nome</th>
             <th>Razão Social</th>
@@ -32,10 +32,13 @@
             </td>
         </tr>
     </tbody>
-    <tfoot>
+    <!-- <tfoot>
         <tr>
             <td colspan="9">Total de registros: {{ registros.length }}</td>
         </tr>
-    </tfoot>
+    </tfoot> -->
 </table>
+<div id="tableFooter">
+    Total de registros: {{ registros.length }}
+</div>
 
