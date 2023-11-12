@@ -1,0 +1,38 @@
+<app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
+<script src="../../../assets/js/jquery-3.7.1.js"></script>
+<script src="../../../assets/js/editTable.js" defer></script>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="imageRow">
+            <td colspan="7">
+                <img src="../../../assets/imagens/pepe-the-frog-sleep.gif">
+            </td>
+        </tr>
+        <tr *ngFor="let item of registros">
+            <td class="fit">{{ item.id }}</td>
+            <td>{{ item.nome }}</td>
+            <td>
+                <a class="botao"
+                   routerLink="./form"
+                   [queryParams]="{id: item.id}">Editar</a>
+                <a class="botao excluir"
+                    (click)="delete(item.id)">Excluir</a>
+            </td>
+        </tr>
+    </tbody>
+    <!-- <tfoot>
+        <tr>
+            <td colspan="3">Total de registros: {{ registros.length }}</td>
+        </tr>
+    </tfoot> -->
+</table>
+<div id="tableFooter">
+    Total de registros: {{ registros.length }}
+</div>
