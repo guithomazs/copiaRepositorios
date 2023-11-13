@@ -1,0 +1,42 @@
+<app-barra-comandos (eventoBusca)="get($event)" [addButton]="false"></app-barra-comandos>
+<table>
+    <thead #tableHeader>
+        <tr>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Paciente</th>
+            <th>Profissional</th>
+            <th>Unidade</th>
+            <th>Convênio</th>
+            <th>Status</th>
+            <!-- <th>Ações</th> -->
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let item of registros">
+            <td class="fit">{{ item.data | date:'dd/MM/yyyy' }}</td>
+            <td class="fit">{{ item.hora | slice:0:5 }}</td>
+            <td>{{ item.paciente.nome }}</td>
+            <td>{{ item.profissional.nome }}</td>
+            <td>{{ item.profissional.unidade.nome }}</td>
+            <td>{{ item.convenio?.nome }}</td>
+            <td>{{ item.status }}</td>
+            <!-- caso sobrasse tempo implementar uma função
+                de marcar retorno -->
+            <!-- <td>
+                <a class="botao retorno"
+                   href="">Retorno</a>
+            </td> -->
+        </tr>
+    </tbody>
+</table>
+
+<div id="pepeDiv">
+    <div class="textoNormal" style="display: none;">Sem Registros para essa busca</div>
+    <img src="../../../assets/imagens/pepe-the-frog-sleep.gif" id="pepeImage">
+</div>
+
+<div id="tableFooter">
+    Total de registros: {{ registros.length }}
+</div>

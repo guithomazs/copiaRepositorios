@@ -1,0 +1,34 @@
+<app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of registros">
+            <td class="fit">{{ item.id }}</td>
+            <td>{{ item.nome }}</td>
+            <td>{{ item.endereco }}</td>
+            <td>
+                <a class="botao"
+                   routerLink="./form"
+                   [queryParams]="{id: item.id}">Editar</a>
+                <a class="botao excluir"
+                    (click)="delete(item.id)">Excluir</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="pepeDiv">
+    <div class="textoNormal" style="display: none;">Sem Registros para essa busca</div>
+    <img src="../../../assets/imagens/pepe-the-frog-sleep.gif" id="pepeImage">
+</div>
+
+<div id="tableFooter">
+    Total de registros: {{ registros.length }}
+</div>

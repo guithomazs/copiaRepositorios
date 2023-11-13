@@ -1,0 +1,17 @@
+<div id="comandos">
+    <a routerLink="./form"
+       class="botao"
+       id="add" *ngIf="this.addButton">
+        Adicionar
+    </a>
+    <span style="visibility: hidden;"></span>
+    <div>
+        <ng-content></ng-content>
+        <input type="search" name="busca" id="busca"
+               placeholder="Digite para buscar"
+               *ngIf="this.searchInput"
+               #termoBusca="ngModel"
+               ngModel
+               (ngModelChange)="busca(termoBusca.value)">
+    </div>
+</div>
