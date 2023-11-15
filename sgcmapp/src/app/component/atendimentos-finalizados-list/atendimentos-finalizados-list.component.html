@@ -1,0 +1,61 @@
+<app-barra-comandos (eventoBusca)="get($event)" [addButton]="false"></app-barra-comandos>
+<table>
+    <thead #tableHeader>
+        <tr>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Paciente</th>
+            <th>Profissional</th>
+            <th>Unidade</th>
+            <th>Convênio</th>
+            <th>Status</th>
+            <!-- <th>Ações</th> -->
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let item of registros">
+            <td class="fit">{{ item.data | date:'dd/MM/yyyy' }}</td>
+            <td class="fit">{{ item.hora | slice:0:5 }}</td>
+            <td>{{ item.paciente.nome }}</td>
+            <td>{{ item.profissional.nome }}</td>
+            <td>{{ item.profissional.unidade.nome }}</td>
+            <td>{{ item.convenio?.nome }}</td>
+            <td>{{ item.status }}</td>
+            <!-- caso sobrasse tempo implementar uma função
+                de marcar retorno -->
+            <!-- <td>
+                <a class="botao retorno"
+                   href="">Retorno</a>
+            </td> -->
+        </tr>
+    </tbody>
+</table>
+
+<div id="pepeDiv">
+    <div class="textoNormal" style="display: none;">Sem Registros para essa busca</div>
+    <img src="../../../assets/imagens/pepe-the-frog-sleep.gif" id="pepeImage" style="display: none;">
+</div>
+
+<div id="tableFooter" style="justify-content: space-between;">
+    <div>
+        <select (change)="setPageSize(+pageSize.value)" #pageSize>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+    <div>
+        Total de registros: {{ registros.length }}
+    </div>
+    <div>
+        <a (click)="goFirstPage()">&#11164;</a>
+        <a (click)="goPreviousPage()">&#8617;</a>
+        {{ this.curr_page }}
+        <a (click)="goNextPage()">&#8618;</a>
+        <a (click)="goLastPage()">&#11166;</a>
+    </div>
+</div>

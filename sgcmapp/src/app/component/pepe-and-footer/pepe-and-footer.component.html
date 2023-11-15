@@ -1,0 +1,18 @@
+
+<div id="tableFooter" style="justify-content: space-between;">
+    <div>
+        <select (change)="setPageSize(+pageSize.value)" [(ngModel)]="page_size" #pageSize>
+            <option value="{{p}}" *ngFor="let p of page_sizes">{{p}}</option>
+        </select>
+    </div>
+    <div>
+        Total de registros: {{ registros.length }}
+    </div>
+    <div>
+        <a (click)="goFirstPage()">&#11164;</a>
+        <a (click)="goPreviousPage()">&#8617;</a>
+        {{ this.curr_page }}
+        <a (click)="goNextPage()">&#8618;</a>
+        <a (click)="goLastPage()">&#11166;</a>
+    </div>
+</div>

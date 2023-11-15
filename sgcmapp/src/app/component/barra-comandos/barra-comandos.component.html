@@ -1,0 +1,20 @@
+<div id="comandos">
+    <div style="display: flex; gap: 5px;">
+        <a routerLink="./form"
+        class="botao"
+        id="add" *ngIf="this.addButton">
+            Adicionar
+        </a>
+        <ng-content select="[divEsquerda]"></ng-content>
+    </div>
+    <span style="visibility: hidden;"></span>
+    <div style="display: flex; justify-content: space-between; gap: 5px;">
+        <ng-content select="[divDireita]"></ng-content>
+        <input type="search" name="busca" id="busca"
+               placeholder="Digite para buscar"
+               *ngIf="this.searchInput"
+               #termoBusca="ngModel"
+               ngModel
+               (ngModelChange)="busca(termoBusca.value)">
+    </div>
+</div>
