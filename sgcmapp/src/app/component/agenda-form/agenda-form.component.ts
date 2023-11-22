@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Atendimento } from 'src/app/model/atendimento';
 import { Convenio } from 'src/app/model/convenio';
@@ -12,6 +12,8 @@ import { PacienteService } from 'src/app/service/paciente.service';
 import { ProfissionalService } from 'src/app/service/profissional.service';
 import { Utils } from 'src/app/utils/utils';
 import { IForm } from '../i-form';
+import { Especialidade } from 'src/app/model/especialidade';
+import { PageResponse } from 'src/app/model/page-response';
 
 @Component({
   selector: 'app-agenda-form',
@@ -34,8 +36,8 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit {
   ngOnInit(): void {
 
     this.servicoConvenio.get().subscribe({
-      next: (resposta: Convenio[]) => {
-        this.convenios = resposta.filter(
+      next: (resposta: PageResponse<Convenio>) => {
+        this.convenios = resposta.content.filter(
           item => item.ativo == true
         ).sort(
           (a, b) => a.nome.localeCompare(b.nome)
@@ -44,18 +46,27 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit {
     });
 
     this.servicoPaciente.get().subscribe({
-      next: (resposta: Paciente[]) => {
-        this.pacientes = resposta.sort(
+      next: (resposta: PageResponse<Paciente>) => {
+        this.pacientes = resposta.content.sort(
           (a, b) => a.nome.localeCompare(b.nome)
         );
       }
     });
 
     this.servicoProfisisonal.get().subscribe({
-      next: (resposta: Profissional[]) => {
-        this.profissionais = resposta.sort(
+      next: (resposta: PageResponse<Profissional>) => {
+        this.profissionais = resposta.content.sort(
+          (a, b) => a.nome.localeCompare(b.nome)
+        );        
+        this.especialidades = [];
+        this.profissionais.forEach(profissional => {
+          if (this.especialidades.filter(e => e.id === profissional.especialidade.id).length === 0)
+            this.especialidades.push(profissional.especialidade);
+        });
+        this.especialidades = this.especialidades.sort(
           (a, b) => a.nome.localeCompare(b.nome)
         );
+        this.profissionaisFiltrados = this.profissionais;
       }
     });
 
@@ -70,11 +81,20 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit {
         }
       });
     }
+
+    const pacienteRemarcando = this.route.snapshot.queryParamMap.get('pacient')
+    if(pacienteRemarcando){
+      this.pacienteRemarcando = true;
+    }
     
   }
 
+  @Input() pacienteRemarcando: boolean = false;
+
+  especialidades: Especialidade[] = Array<Especialidade>();
   registro: Atendimento = <Atendimento>{};
   profissionais: Profissional[] = Array<Profissional>();
+  profissionaisFiltrados: Profissional[] = Array<Profissional>();
   convenios: Convenio[] = Array<Convenio>();
   pacientes: Paciente[] = Array<Paciente>();
   compareById = Utils.compareById;
@@ -85,7 +105,7 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit {
     if (typeof this.registro.convenio == 'string') {
       this.registro.convenio = null;
     }
-    
+    this.registro.status = "AGENDADO";
     this.servico.save(this.registro).subscribe({
       complete: () => {
         this.router.navigate(['/agenda']);
@@ -96,6 +116,17 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit {
       }
     });
     
+  }
+
+  // Criar o método onChange que filtra a lista de profissionais
+  filtraProfissionais(): void {
+    const especialidadeHtml = document.querySelector<HTMLSelectElement>("#especialidade");
+    const especialidade = especialidadeHtml?.value;
+    if (especialidade && especialidade !== "0"){
+      this.profissionaisFiltrados = this.profissionais.filter(profissional => `${profissional.especialidade.id}` == especialidade)
+    } else {
+      this.profissionaisFiltrados = this.profissionais;
+    }
   }
 
   verificaHorario(): void {

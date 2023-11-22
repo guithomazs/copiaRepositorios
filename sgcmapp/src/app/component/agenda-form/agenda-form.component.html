@@ -1,13 +1,19 @@
 <form (submit)="save()" #form="ngForm">
 
     <div class="grid">
-
+        <!-- Adicionar a lista de especialidades com controle do evento onChange -->
+        <label for="especialidade">Especialidade</label>
+        <select name="especialidade" id="especialidade" (change)="filtraProfissionais()">
+            <option value="0"></option>
+            <option *ngFor="let item of especialidades"
+                    value="{{item.id}}">{{item.nome}}</option>
+        </select>
         <label for="profissional">Profissional</label>
         <select name="profissional" id="profissional" required
                 [(ngModel)]="registro.profissional"
                 [compareWith]="compareById"
                 (change)="verificaHorario()">
-            <option *ngFor="let item of profissionais"
+            <option *ngFor="let item of profissionaisFiltrados"
                     [ngValue]="item">{{item.nome}}</option>
         </select>
 
@@ -46,6 +52,7 @@
 
         <label for="paciente">Paciente</label>
         <select name="paciente" id="paciente" required
+                [disabled]="this.pacienteRemarcando"
                 [(ngModel)]="registro.paciente"
                 [compareWith]="compareById">
             <option *ngFor="let item of pacientes"

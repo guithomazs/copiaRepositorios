@@ -1,16 +1,5 @@
 <app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
 <table>
-    <!-- <thead>
-        <tr>
-            <th>Data</th>
-            <th>Hora</th>
-            <th>Paciente</th>
-            <th>Profissional</th>
-            <th>Unidade</th>
-            <th>Convênio</th>
-            <th>Ações</th>
-        </tr>
-    </thead> -->
     <thead app-thead-ordenacao
         [colunas]="colunas"
         (eventoOrdenacao)="ordenar($event)"
@@ -57,5 +46,4 @@
     (paginaSelecionada)="mudarPagina($event)"
     (tamanhoPaginaSelecionada)="mudarTamanhoPagina($event)"
 >
-
 </app-paginacao>

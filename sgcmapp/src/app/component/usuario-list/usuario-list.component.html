@@ -1,13 +1,9 @@
 <app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
 <table>
-    <thead>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Usuário</th>
-        <th>Ativo</th>
-        <th>Papel</th>
-        <th>Ações</th>
-    </thead>
+    <thead app-thead-ordenacao
+        [colunas]="colunas"
+        (eventoOrdenacao)="ordenar($event)"
+    ></thead>
     <tbody>
         <tr *ngFor="let item of registros">
             <td>{{ item.id }}</td>
@@ -30,3 +26,12 @@
         </tr>
     </tfoot>
 </table>
+<app-paginacao 
+    [totalItens]="paginaResposta.totalElements"
+    [totalPaginas]="paginaResposta.totalPages"
+    [paginaAtual]="paginaResposta.number"
+    [tamanhoPagina]="paginaResposta.size"
+    (paginaSelecionada)="mudarPagina($event)"
+    (tamanhoPaginaSelecionada)="mudarTamanhoPagina($event)"
+>
+</app-paginacao>

@@ -25,6 +25,32 @@ public class AtendimentoService implements IService<Atendimento> {
         return repo.findAll(page);
     }
 
+    public List<EStatus> defineListaEStatus(String tipo) {
+        List<EStatus> status = new ArrayList<>();
+        if(tipo.equals("agenda")){
+            status.add(EStatus.AGENDADO);
+            status.add(EStatus.CONFIRMADO);
+        } else if (tipo.equals("emAndamento")) {
+            status.add(EStatus.CHEGADA);
+            status.add(EStatus.ATENDIMENTO);
+        } else if (tipo.equals("encerrado")) {
+            status.add(EStatus.ENCERRADO);
+        } else if (tipo.equals("cancelado")) {
+            status.add(EStatus.CANCELADO);
+        }
+        return status;
+    }
+
+    public Page<Atendimento> getTipo(String tipo, Pageable page) {
+        List<EStatus> status = this.defineListaEStatus(tipo);
+        return repo.getTipos(status, page);
+    }
+
+    public Page<Atendimento> getTipoBusca(String tipo, String termoBusca, Pageable page) {
+        List<EStatus> status = this.defineListaEStatus(tipo);
+        return repo.buscaPorTipo(termoBusca, status, page);
+    }
+
     @Override
     public Atendimento get(Long id) {
         return repo.findById(id).orElse(null);

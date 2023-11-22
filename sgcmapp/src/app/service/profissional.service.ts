@@ -4,23 +4,30 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Profissional } from '../model/profissional';
 import { IService } from './i-service';
+import { PageRequest } from '../model/page-request';
+import { PageResponse } from '../model/page-response';
 
 @Injectable({
   providedIn: 'root'
 })
-// export class ProfissionalService implements IService<Profissional> {
-export class ProfissionalService {
+export class ProfissionalService implements IService<Profissional> {
 
   constructor(private http: HttpClient) { }
 
   apiUrl: string = environment.API_URL + '/profissional/';
 
-  get(termoBusca?: string | undefined): Observable<Profissional[]> {
-    let url = this.apiUrl;
+  get(termoBusca?: string | undefined, pageRequest?: PageRequest): Observable<PageResponse<Profissional>> {
+    let url = this.apiUrl ;
     if (termoBusca) {
       url += "busca/" + termoBusca;
     }
-    return this.http.get<Profissional[]>(url);
+  if(pageRequest) {
+    url += "?page=" + pageRequest.page + "&size=" + pageRequest.size;
+    pageRequest.sort.forEach(campo => {
+      url += "&sort=" + campo;
+    })
+  }
+    return this.http.get<PageResponse<Profissional>>(url);
   }
 
   getById(id: number): Observable<Profissional> {

@@ -17,12 +17,18 @@ import { UsuarioListComponent } from './component/usuario-list/usuario-list.comp
 import { UsuarioFormComponent } from './component/usuario-form/usuario-form.component';
 import { LoginComponent } from './component/login/login.component';
 import { authGuard } from './service/auth.guard';
+import { AtendimentosCanceladosComponent } from './component/atendimentos-cancelados/atendimentos-cancelados.component';
+import { AtendimentosFinalizadosComponent } from './component/atendimentos-finalizados/atendimentos-finalizados.component';
 
 const routes: Routes = [
   { path: '', canActivate: [authGuard], children: [
     { path: 'agenda', component: AgendaListComponent },
     { path: 'agenda/form', component: AgendaFormComponent },
-    { path: 'atendimento', component: AtendimentoListComponent},    
+    { path: 'atendimentos', children: [
+      { path: 'emAndamento', component: AtendimentoListComponent },
+      { path: 'finalizados', component: AtendimentosFinalizadosComponent },
+      { path: 'cancelados', component: AtendimentosCanceladosComponent },
+    ]},
     { path: 'pacientes', component: PacienteListComponent },
     { path: 'pacientes/form', component: PacienteFormComponent },
     { path: 'profissionais', component: ProfissionalListComponent },

@@ -3,6 +3,7 @@ import { IList } from '../i-list';
 import { Atendimento } from 'src/app/model/atendimento';
 import { AtendimentoService } from 'src/app/service/atendimento.service';
 import { PageResponse } from 'src/app/model/page-response';
+import { PageRequest } from 'src/app/model/page-request';
 
 @Component({
   selector: 'app-atendimento-list',
@@ -19,23 +20,52 @@ export class AtendimentoListComponent implements IList<Atendimento>, OnInit {
   }
 
   registros: Atendimento[] = Array<Atendimento>();
-  status: string[] = ['CHEGADA', 'ATENDIMENTO'];
+  paginaRequisicao: PageRequest = new PageRequest();
+  paginaResposta: PageResponse<Atendimento> = <PageResponse<Atendimento>>{};
+  buscado: string | undefined = '';
+
+  colunas = [
+    { campo: 'data', descricao: 'Data' },
+    { campo: 'hora', descricao: 'Hora' },
+    { campo: 'paciente.nome', descricao: 'Paciente' },
+    { campo: 'profissional.nome', descricao: 'Profissional' },
+    { campo: 'profissional.unidade.nome', descricao: 'Unidade' },
+    { campo: 'convenio.nome', descricao: 'Convênio' },
+    { campo: '', descricao: 'Ações' },
+  ]
+
+  ordenar(ordenacao: string[]): void {
+    this.paginaRequisicao.sort = ordenacao;
+    this.paginaRequisicao.page = 0;
+    this.get(this.buscado);
+  }
 
   get(termoBusca?: string | undefined): void {
-    this.servico.get(termoBusca).subscribe({
+    this.servico.get(termoBusca, this.paginaRequisicao, 'emAndamento').subscribe({
       next: (resposta: PageResponse<Atendimento>) => {
-        this.registros = resposta.content.filter(item => {
-          return this.status.includes(item.status);
-        });
+        this.registros = resposta.content;
+        this.paginaResposta = resposta;
+        this.buscado = termoBusca;
       }
     });
+  }
+
+  mudarPagina(paginaSelecionada: number): void { 
+    this.paginaRequisicao.page = paginaSelecionada
+    this.get(this.buscado);
+  }
+
+  mudarTamanhoPagina(tamanhoPagina: number): void {
+    this.paginaRequisicao.size = tamanhoPagina;
+    this.paginaRequisicao.page = 0;
+    this.get(this.buscado);
   }
 
   updateStatus(id: number): void {
     if (confirm('Confirma alteração no status do agendamento?')) {
       this.servico.updateStatus(id).subscribe({
         complete: () => {
-          this.get();
+          this.get(this.buscado);
         }
       });
     }

@@ -1,4 +1,4 @@
-<app-barra-comandos (eventoBusca)="get($event)"></app-barra-comandos>
+<app-barra-comandos (eventoBusca)="get($event)" [addButton]="false"></app-barra-comandos>
 <table>
     <thead app-thead-ordenacao
         [colunas]="colunas"
@@ -12,16 +12,7 @@
             <td>{{ item.profissional.nome }}</td>
             <td>{{ item.profissional.unidade.nome }}</td>
             <td>{{ item.convenio?.nome }}</td>
-            <td>
-                <a class="botao iniciar"
-                   href=""
-                   (click)="updateStatus(item.id);$event.preventDefault();"
-                   [ngClass]="{ 'inativo': item.status == 'ATENDIMENTO' }">Iniciar</a>
-                <a class="botao finalizar excluir"
-                   href=""
-                   (click)="updateStatus(item.id);$event.preventDefault();"
-                   [ngClass]="{ 'inativo': item.status == 'CHEGADA' }">Finalizar</a>
-            </td>
+            <td>{{ item.status }}</td>
         </tr>
     </tbody>
     <tfoot>

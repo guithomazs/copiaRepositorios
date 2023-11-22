@@ -1,9 +1,10 @@
 <div id="comandos">
     <a routerLink="./form"
        class="botao"
-       id="add">
+       id="add" *ngIf="this.addButton">
         Adicionar
     </a>
+    <span style="visibility: hidden;"></span>
     <div>
         <input type="search" name="busca" id="busca"
                placeholder="Digite para buscar"

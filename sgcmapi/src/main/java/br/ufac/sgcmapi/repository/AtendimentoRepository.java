@@ -29,5 +29,30 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> 
 
     List<Atendimento> findByProfissionalAndDataAndStatusNot(
         Profissional profissional, LocalDate data, EStatus status);
+
+    @Query("SELECT a FROM Atendimento a" +
+        " LEFT JOIN Profissional p ON p.id = a.profissional" +
+        " LEFT JOIN Paciente pa ON pa.id = a.paciente" +
+        " LEFT JOIN Convenio c ON c.id = a.convenio" +
+        " LEFT JOIN Unidade u ON u.id = p.unidade" +
+        " LEFT JOIN Especialidade e ON e.id = p.especialidade" +
+        " WHERE a.status in :tipos"
+        )
+    Page<Atendimento> getTipos(List<EStatus> tipos, Pageable page);
+
+    @Query("SELECT a FROM Atendimento a"                       +
+        " LEFT JOIN Profissional p ON p.id = a.profissional"   +
+        " LEFT JOIN Paciente pa ON pa.id = a.paciente"         +
+        " LEFT JOIN Convenio c ON c.id = a.convenio"           +
+        " LEFT JOIN Unidade u ON u.id = p.unidade"             +
+        " LEFT JOIN Especialidade e ON e.id = p.especialidade" +
+        " WHERE a.status IN :tipos"                            +
+        " AND (p.nome LIKE %:termoBusca%"                      +
+        " OR pa.nome LIKE %:termoBusca%"                       +
+        " OR c.nome LIKE %:termoBusca%"                        +
+        " OR u.nome LIKE %:termoBusca%"                        +
+        " OR e.nome LIKE %:termoBusca%)"
+        )
+    Page<Atendimento> buscaPorTipo(String termoBusca, List<EStatus> tipos, Pageable page);
     
 }

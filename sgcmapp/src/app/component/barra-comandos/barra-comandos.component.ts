@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class BarraComandosComponent {
 
+  @Input() addButton: boolean = true;
   @Output() eventoBusca = new EventEmitter();
 
   busca(termoBusca: string) {

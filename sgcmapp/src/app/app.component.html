@@ -6,9 +6,9 @@
       <img src="assets/imagens/logo_branco.png" alt="Logo SGCM">
       <span id="titulo">{{ title }}</span>
   </div>
-  <div id="usuarioInfo" *ngIf="!isLogin()">
-      <span>Usuário: {{usuario.nomeCompleto}} ({{usuario.nomeUsuario}})</span>
-      <span>Papel: {{usuario.papel}}</span>
+  <div id="usuarioInfo">
+      <span>Usuário: Administrador (admin)</span>
+      <span>Papel: ADMIN</span>
       <select id="tema">
           <option value="">Escolha um tema</option>
           <option value="azul">Azul</option>
@@ -16,18 +16,27 @@
           <option value="amarelo">Amarelo</option>
       </select>
       <a href="javascript:void(0)"
-         (click)="logout()"
          class="botao">Logout</a>
   </div>
 </header>
-<nav *ngIf="!isLogin()">
+<nav>
   <ul>
       <li><a routerLink="/agenda">Agenda</a></li>
-      <li><a routerLink="/atendimento">Atendimento</a></li>
+      <li id="dropdown">
+        <a routerLink="/atendimentos/marcados">Atendimentos
+            <span>&#9660;</span>
+            
+        </a>
+        <div id="dropdown_menu">
+            <a routerLink="/atendimentos/emAndamento">Em andamento</a>
+            <a routerLink="/atendimentos/finalizados">Finalizados</a>
+            <a routerLink="/atendimentos/cancelados">Cancelados</a>
+        </div>
+    </li>
       <li><a routerLink="/pacientes">Pacientes</a></li>
       <li><a routerLink="/profissionais">Profissionais</a></li>
       <li><a routerLink="/convenios">Convênios</a></li>
-      <li id="dropdown" *ngIf="isAdmin()">
+      <li id="dropdown">
           <a href="javascript:void(0)">
               Configurações
               <span>&#9660;</span>

@@ -16,8 +16,8 @@ export class AtendimentoService implements IService<Atendimento> {
 
   apiUrl: string = environment.API_URL + "/atendimento/";
 
-  get(termoBusca?: string | undefined, pageRequest?: PageRequest): Observable<PageResponse<Atendimento>> {
-    let url = this.apiUrl;
+  get(termoBusca?: string | undefined, pageRequest?: PageRequest, tipo?: string): Observable<PageResponse<Atendimento>> {
+    let url = this.apiUrl + tipo + '/';
     if (termoBusca) {
       url += "busca/" + termoBusca;
     }

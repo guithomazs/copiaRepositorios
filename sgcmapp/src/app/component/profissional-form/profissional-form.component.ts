@@ -10,6 +10,7 @@ import { ProfissionalService } from 'src/app/service/profissional.service';
 import { UnidadeService } from 'src/app/service/unidade.service';
 import { Utils } from 'src/app/utils/utils';
 import { IForm } from '../i-form';
+import { PageResponse } from 'src/app/model/page-response';
 
 @Component({
   selector: 'app-profissional-form',
@@ -30,14 +31,14 @@ export class ProfissionalFormComponent implements OnInit, IForm<Profissional> {
   ngOnInit(): void {
 
     this.servicoEspecialidade.get().subscribe({
-      next: (resposta: Especialidade[]) => {
-        this.especialidades = resposta;
+      next: (resposta: PageResponse<Especialidade>) => {
+        this.especialidades = resposta.content;
       }
     });
 
     this.servicoUnidade.get().subscribe({
-      next: (resposta: Unidade[]) => {
-        this.unidades = resposta;
+      next: (resposta: PageResponse<Unidade>) => {
+        this.unidades = resposta.content;
       }
     });
 

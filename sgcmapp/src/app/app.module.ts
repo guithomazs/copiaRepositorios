@@ -29,6 +29,8 @@ import { LoginComponent } from './component/login/login.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { PaginacaoComponent } from './component/paginacao/paginacao.component';
 import { TheadOrdenacaoComponent } from './component/thead-ordenacao/thead-ordenacao.component';
+import { AtendimentosFinalizadosComponent } from './component/atendimentos-finalizados/atendimentos-finalizados.component';
+import { AtendimentosCanceladosComponent } from './component/atendimentos-cancelados/atendimentos-cancelados.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { TheadOrdenacaoComponent } from './component/thead-ordenacao/thead-orden
     LoaderComponent,
     LoginComponent,
     PaginacaoComponent,
-    TheadOrdenacaoComponent
+    TheadOrdenacaoComponent,
+    AtendimentosFinalizadosComponent,
+    AtendimentosCanceladosComponent
   ],
   imports: [
     BrowserModule,

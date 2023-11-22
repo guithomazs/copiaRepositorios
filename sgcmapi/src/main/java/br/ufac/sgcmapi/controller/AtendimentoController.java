@@ -34,6 +34,15 @@ public class AtendimentoController implements IController<Atendimento> {
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 
+    @GetMapping("/{tipo}/")
+    public ResponseEntity<Page<Atendimento>> getTipo(
+            @PathVariable("tipo") String tipo, 
+            Pageable page
+            ) {
+        Page<Atendimento> registros = servico.getTipo(tipo, page);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    }
+
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<Atendimento> get(@PathVariable Long id) {
@@ -45,6 +54,12 @@ public class AtendimentoController implements IController<Atendimento> {
     @GetMapping("/busca/{termoBusca}")
     public ResponseEntity<Page<Atendimento>> get(@PathVariable("termoBusca") String termoBusca, Pageable page) {
         Page<Atendimento> registros = servico.get(termoBusca, page);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    }
+
+    @GetMapping("/{tipo}/busca/{termoBusca}")
+    public ResponseEntity<Page<Atendimento>> get(@PathVariable("tipo") String tipo, @PathVariable("termoBusca") String termoBusca, Pageable page) {
+        Page<Atendimento> registros = servico.getTipoBusca(tipo, termoBusca, page);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 

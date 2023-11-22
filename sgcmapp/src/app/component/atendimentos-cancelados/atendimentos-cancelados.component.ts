@@ -1,23 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { IList } from '../i-list';
 import { Atendimento } from 'src/app/model/atendimento';
-import { AtendimentoService } from 'src/app/service/atendimento.service';
-import { PageResponse } from 'src/app/model/page-response';
 import { PageRequest } from 'src/app/model/page-request';
+import { PageResponse } from 'src/app/model/page-response';
+import { AtendimentoService } from 'src/app/service/atendimento.service';
+import { IList } from '../i-list';
 
 @Component({
-  selector: 'app-agenda-list',
-  templateUrl: './agenda-list.component.html',
-  styles: [
-  ]
+  selector: 'app-atendimentos-cancelados',
+  templateUrl: './atendimentos-cancelados.component.html',
+  styleUrls: ['./atendimentos-cancelados.component.scss']
 })
-export class AgendaListComponent implements IList<Atendimento>, OnInit {
+export class AtendimentosCanceladosComponent implements IList<Atendimento>, OnInit {
 
   constructor(private servico: AtendimentoService) {}
 
   ngOnInit(): void {
-    // this.paginaRequisicao.size = 5;
-    // this.paginaRequisicao.page = 4;
     this.get();
   }
 
@@ -43,23 +40,13 @@ export class AgendaListComponent implements IList<Atendimento>, OnInit {
   }
 
   get(termoBusca?: string | undefined): void {
-    this.servico.get(termoBusca, this.paginaRequisicao, 'agenda').subscribe({
+    this.servico.get(termoBusca, this.paginaRequisicao, 'cancelado').subscribe({
       next: (resposta: PageResponse<Atendimento>) => {
         this.registros = resposta.content;
         this.paginaResposta = resposta;
         this.buscado = termoBusca;
       }
     });
-  }
-
-  delete(id: number): void {
-    if (confirm('Deseja cancelar o agendamento?')) {
-      this.servico.delete(id).subscribe({
-        complete: () => {
-          this.get(this.buscado);
-        }
-      });
-    }
   }
 
   updateStatus(id: number): void {
@@ -70,6 +57,10 @@ export class AgendaListComponent implements IList<Atendimento>, OnInit {
         }
       });
     }
+  }
+
+  delete(id: number): void {
+    throw new Error('Method not implemented.');
   }
 
   mudarPagina(paginaSelecionada: number): void { 
@@ -84,3 +75,4 @@ export class AgendaListComponent implements IList<Atendimento>, OnInit {
   }
 
 }
+

@@ -4,23 +4,31 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Convenio } from '../model/convenio';
 import { IService } from './i-service';
+import { PageRequest } from '../model/page-request';
+import { PageResponse } from '../model/page-response';
 
 @Injectable({
   providedIn: 'root'
 })
-// export class ConvenioService implements IService<Convenio> {
-export class ConvenioService {
+export class ConvenioService implements IService<Convenio> {
+// export class ConvenioService {
 
   constructor(private http: HttpClient) { }
 
   apiUrl: string = environment.API_URL + '/convenio/';
 
-  get(termoBusca?: string | undefined): Observable<Convenio[]> {
-    let url = this.apiUrl;
+  get(termoBusca?: string | undefined, pageRequest?: PageRequest): Observable<PageResponse<Convenio>> {
+    let url = this.apiUrl ;
     if (termoBusca) {
       url += "busca/" + termoBusca;
     }
-    return this.http.get<Convenio[]>(url);
+  if(pageRequest) {
+    url += "?page=" + pageRequest.page + "&size=" + pageRequest.size;
+    pageRequest.sort.forEach(campo => {
+      url += "&sort=" + campo;
+    })
+  }
+    return this.http.get<PageResponse<Convenio>>(url);
   }
 
   getById(id: number): Observable<Convenio> {

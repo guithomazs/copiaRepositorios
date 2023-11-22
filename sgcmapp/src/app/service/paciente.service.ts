@@ -4,23 +4,30 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Paciente } from '../model/paciente';
 import { IService } from './i-service';
+import { PageRequest } from '../model/page-request';
+import { PageResponse } from '../model/page-response';
 
 @Injectable({
   providedIn: 'root'
 })
-// export class PacienteService implements IService<Paciente> {
-export class PacienteService {
+export class PacienteService implements IService<Paciente> {
 
   constructor(private http: HttpClient) { }
 
   apiUrl: string = environment.API_URL + '/paciente/';
 
-  get(termoBusca?: string | undefined): Observable<Paciente[]> {
-    let url = this.apiUrl;
+  get(termoBusca?: string | undefined, pageRequest?: PageRequest): Observable<PageResponse<Paciente>> {
+    let url = this.apiUrl ;
     if (termoBusca) {
       url += "busca/" + termoBusca;
     }
-    return this.http.get<Paciente[]>(url);
+  if(pageRequest) {
+    url += "?page=" + pageRequest.page + "&size=" + pageRequest.size;
+    pageRequest.sort.forEach(campo => {
+      url += "&sort=" + campo;
+    })
+  }
+    return this.http.get<PageResponse<Paciente>>(url);
   }
 
   getById(id: number): Observable<Paciente> {

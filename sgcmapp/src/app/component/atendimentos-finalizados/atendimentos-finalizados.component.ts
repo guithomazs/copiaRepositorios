@@ -1,30 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { IList } from '../i-list';
 import { Atendimento } from 'src/app/model/atendimento';
-import { AtendimentoService } from 'src/app/service/atendimento.service';
-import { PageResponse } from 'src/app/model/page-response';
 import { PageRequest } from 'src/app/model/page-request';
+import { PageResponse } from 'src/app/model/page-response';
+import { AtendimentoService } from 'src/app/service/atendimento.service';
+import { IList } from '../i-list';
 
 @Component({
-  selector: 'app-agenda-list',
-  templateUrl: './agenda-list.component.html',
-  styles: [
-  ]
+  selector: 'app-atendimentos-finalizados',
+  templateUrl: './atendimentos-finalizados.component.html',
+  styleUrls: ['./atendimentos-finalizados.component.scss']
 })
-export class AgendaListComponent implements IList<Atendimento>, OnInit {
+export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnInit {
 
   constructor(private servico: AtendimentoService) {}
 
   ngOnInit(): void {
-    // this.paginaRequisicao.size = 5;
-    // this.paginaRequisicao.page = 4;
     this.get();
   }
 
   registros: Atendimento[] = Array<Atendimento>();
+  status: string[] = ['CHEGADA', 'ATENDIMENTO'];
   paginaRequisicao: PageRequest = new PageRequest();
   paginaResposta: PageResponse<Atendimento> = <PageResponse<Atendimento>>{};
-  buscado: string | undefined = '';
 
   colunas = [
     { campo: 'data', descricao: 'Data' },
@@ -33,54 +30,47 @@ export class AgendaListComponent implements IList<Atendimento>, OnInit {
     { campo: 'profissional.nome', descricao: 'Profissional' },
     { campo: 'profissional.unidade.nome', descricao: 'Unidade' },
     { campo: 'convenio.nome', descricao: 'Convênio' },
-    { campo: '', descricao: 'Ações' },
+    { campo: '', descricao: 'Status' },
   ]
 
   ordenar(ordenacao: string[]): void {
     this.paginaRequisicao.sort = ordenacao;
     this.paginaRequisicao.page = 0;
-    this.get(this.buscado);
+    this.get()
   }
 
   get(termoBusca?: string | undefined): void {
-    this.servico.get(termoBusca, this.paginaRequisicao, 'agenda').subscribe({
+    this.servico.get(termoBusca, this.paginaRequisicao, 'encerrado').subscribe({
       next: (resposta: PageResponse<Atendimento>) => {
         this.registros = resposta.content;
         this.paginaResposta = resposta;
-        this.buscado = termoBusca;
       }
     });
-  }
-
-  delete(id: number): void {
-    if (confirm('Deseja cancelar o agendamento?')) {
-      this.servico.delete(id).subscribe({
-        complete: () => {
-          this.get(this.buscado);
-        }
-      });
-    }
   }
 
   updateStatus(id: number): void {
     if (confirm('Confirma alteração no status do agendamento?')) {
       this.servico.updateStatus(id).subscribe({
         complete: () => {
-          this.get(this.buscado);
+          this.get();
         }
       });
     }
   }
 
+  delete(id: number): void {
+    throw new Error('Method not implemented.');
+  }
+
   mudarPagina(paginaSelecionada: number): void { 
     this.paginaRequisicao.page = paginaSelecionada
-    this.get(this.buscado);
+    this.get();
   }
 
   mudarTamanhoPagina(tamanhoPagina: number): void {
     this.paginaRequisicao.size = tamanhoPagina;
     this.paginaRequisicao.page = 0;
-    this.get(this.buscado);
+    this.get();
   }
 
 }
