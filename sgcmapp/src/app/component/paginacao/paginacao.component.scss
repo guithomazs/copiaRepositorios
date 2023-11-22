@@ -1,0 +1,41 @@
+nav, nav *, nav:hover {
+    all: revert;
+}
+
+nav{
+
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    li a, li {
+        display: inline-block;
+    }
+
+    li a {
+        color: inherit;
+        text-decoration: none;
+        padding: .25em .5em;
+        margin: 0 .1em;
+        &:hover, &.ativo {
+            background-color: #383838;
+            color: white;
+            border-radius: 10%;
+        }
+    }
+
+}
+
+div.alinhar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+div.invii {
+    background-color: red;
+}
