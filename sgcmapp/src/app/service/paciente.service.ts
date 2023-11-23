@@ -30,6 +30,11 @@ export class PacienteService implements IService<Paciente> {
     return this.http.get<PageResponse<Paciente>>(url);
   }
 
+  getAll(): Observable<Paciente[]> {
+    let url = this.apiUrl + "all";
+    return this.http.get<Paciente[]>(url);
+  }
+
   getById(id: number): Observable<Paciente> {
     let url = this.apiUrl + id;
     return this.http.get<Paciente>(url);

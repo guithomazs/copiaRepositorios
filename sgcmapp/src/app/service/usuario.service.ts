@@ -30,6 +30,11 @@ export class UsuarioService implements IService<Usuario> {
     return this.http.get<PageResponse<Usuario>>(url);
   }
 
+  getAll(): Observable<Usuario[]> {
+    let url = this.apiUrl + "all";
+    return this.http.get<Usuario[]>(url);
+  }
+
   getById(id: number): Observable<Usuario> {
     let url = this.apiUrl + id;
     return this.http.get<Usuario>(url);

@@ -13,5 +13,5 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, Lo
         "SELECT e FROM Especialidade e WHERE e.nome LIKE %?1%"
     )
     Page<Especialidade> busca(String termoBusca, Pageable page);
-    
+
 }

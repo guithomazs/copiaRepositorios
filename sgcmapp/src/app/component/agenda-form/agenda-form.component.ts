@@ -13,7 +13,6 @@ import { ProfissionalService } from 'src/app/service/profissional.service';
 import { Utils } from 'src/app/utils/utils';
 import { IForm } from '../i-form';
 import { Especialidade } from 'src/app/model/especialidade';
-import { PageResponse } from 'src/app/model/page-response';
 
 @Component({
   selector: 'app-agenda-form',
@@ -35,9 +34,9 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit {
 
   ngOnInit(): void {
 
-    this.servicoConvenio.get().subscribe({
-      next: (resposta: PageResponse<Convenio>) => {
-        this.convenios = resposta.content.filter(
+    this.servicoConvenio.getAll().subscribe({
+      next: (resposta: Convenio[]) => {
+        this.convenios = resposta.filter(
           item => item.ativo == true
         ).sort(
           (a, b) => a.nome.localeCompare(b.nome)
@@ -45,17 +44,17 @@ export class AgendaFormComponent implements IForm<Atendimento>, OnInit {
       }
     });
 
-    this.servicoPaciente.get().subscribe({
-      next: (resposta: PageResponse<Paciente>) => {
-        this.pacientes = resposta.content.sort(
+    this.servicoPaciente.getAll().subscribe({
+      next: (resposta: Paciente[]) => {
+        this.pacientes = resposta.sort(
           (a, b) => a.nome.localeCompare(b.nome)
         );
       }
     });
 
-    this.servicoProfisisonal.get().subscribe({
-      next: (resposta: PageResponse<Profissional>) => {
-        this.profissionais = resposta.content.sort(
+    this.servicoProfisisonal.getAll().subscribe({
+      next: (resposta: Profissional[]) => {
+        this.profissionais = resposta.sort(
           (a, b) => a.nome.localeCompare(b.nome)
         );        
         this.especialidades = [];

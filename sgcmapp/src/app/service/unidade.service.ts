@@ -30,6 +30,11 @@ export class UnidadeService implements IService<Unidade> {
     return this.http.get<PageResponse<Unidade>>(url);
   }
 
+  getAll(): Observable<Unidade[]> {
+    let url = this.apiUrl + "all";
+    return this.http.get<Unidade[]>(url);
+  }
+
   getById(id: number): Observable<Unidade> {
     let url = this.apiUrl + id;
     return this.http.get<Unidade>(url);

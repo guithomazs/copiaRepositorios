@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Convenio } from 'src/app/model/convenio';
 import { AlertaService } from 'src/app/service/alerta.service';

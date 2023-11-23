@@ -22,7 +22,9 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="6">Total de registros: {{ registros.length }}</td>
+            <td colspan="6">
+                Total de registros: {{ this.paginaResposta.numberOfElements }} / {{ this.paginaResposta.totalElements }}
+            </td>
         </tr>
     </tfoot>
 </table>

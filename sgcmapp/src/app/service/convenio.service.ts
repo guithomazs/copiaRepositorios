@@ -31,6 +31,11 @@ export class ConvenioService implements IService<Convenio> {
     return this.http.get<PageResponse<Convenio>>(url);
   }
 
+  getAll(): Observable<Convenio[]> {
+    let url = this.apiUrl + "all";
+    return this.http.get<Convenio[]>(url);
+  }
+
   getById(id: number): Observable<Convenio> {
     let url = this.apiUrl + id;
     return this.http.get<Convenio>(url);

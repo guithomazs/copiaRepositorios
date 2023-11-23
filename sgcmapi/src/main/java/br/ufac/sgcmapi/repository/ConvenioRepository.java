@@ -17,5 +17,5 @@ public interface ConvenioRepository extends JpaRepository<Convenio, Long> {
         " OR c.email LIKE %?1%" +
         " OR c.telefone LIKE %?1%")
     Page<Convenio> busca(String termoBusca, Pageable page);
-    
+
 }

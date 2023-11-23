@@ -1,0 +1,5 @@
+<select id="tema" (click)="mudarTema(selecTema.value)" #selecTema>
+    <option *ngFor="let tema of temas" [value]="tema.valor">
+        {{ tema.descricao }}
+    </option>
+</select>

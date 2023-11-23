@@ -1,5 +1,7 @@
 package br.ufac.sgcmapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,12 @@ public class EspecialidadeController implements IController<Especialidade> {
 
     @Autowired
     private EspecialidadeService servico;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Especialidade>> getAll () {
+        List<Especialidade> result = servico.getAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @Override
     @GetMapping("/")

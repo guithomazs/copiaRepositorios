@@ -1,5 +1,7 @@
 package br.ufac.sgcmapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,12 @@ public class UsuarioController implements IController<Usuario> {
 
     @Autowired
     private UsuarioService servico;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Usuario>> getAll () {
+        List<Usuario> result = servico.getAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @Override
     @GetMapping("/")

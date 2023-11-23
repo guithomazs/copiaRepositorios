@@ -30,6 +30,11 @@ export class ProfissionalService implements IService<Profissional> {
     return this.http.get<PageResponse<Profissional>>(url);
   }
 
+  getAll(): Observable<Profissional[]> {
+    let url = this.apiUrl + "all";
+    return this.http.get<Profissional[]>(url);
+  }
+
   getById(id: number): Observable<Profissional> {
     let url = this.apiUrl + id;
     return this.http.get<Profissional>(url);

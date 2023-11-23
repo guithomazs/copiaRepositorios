@@ -19,5 +19,5 @@ public interface ProfissionalRepository extends JpaRepository<Profissional, Long
         " OR e.nome LIKE %?1%" +
         " OR u.nome LIKE %?1%")
     Page<Profissional> busca(String termoBusca, Pageable page);
-    
+
 }

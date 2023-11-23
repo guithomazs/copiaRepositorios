@@ -19,9 +19,9 @@ export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnI
   }
 
   registros: Atendimento[] = Array<Atendimento>();
-  status: string[] = ['CHEGADA', 'ATENDIMENTO'];
   paginaRequisicao: PageRequest = new PageRequest();
   paginaResposta: PageResponse<Atendimento> = <PageResponse<Atendimento>>{};
+  buscado: string | undefined = '';
 
   colunas = [
     { campo: 'data', descricao: 'Data' },
@@ -36,7 +36,7 @@ export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnI
   ordenar(ordenacao: string[]): void {
     this.paginaRequisicao.sort = ordenacao;
     this.paginaRequisicao.page = 0;
-    this.get()
+    this.get(this.buscado);
   }
 
   get(termoBusca?: string | undefined): void {
@@ -44,6 +44,7 @@ export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnI
       next: (resposta: PageResponse<Atendimento>) => {
         this.registros = resposta.content;
         this.paginaResposta = resposta;
+        this.buscado = termoBusca;
       }
     });
   }
@@ -52,7 +53,7 @@ export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnI
     if (confirm('Confirma alteração no status do agendamento?')) {
       this.servico.updateStatus(id).subscribe({
         complete: () => {
-          this.get();
+          this.get(this.buscado);
         }
       });
     }
@@ -64,13 +65,13 @@ export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnI
 
   mudarPagina(paginaSelecionada: number): void { 
     this.paginaRequisicao.page = paginaSelecionada
-    this.get();
+    this.get(this.buscado);
   }
 
   mudarTamanhoPagina(tamanhoPagina: number): void {
     this.paginaRequisicao.size = tamanhoPagina;
     this.paginaRequisicao.page = 0;
-    this.get();
+    this.get(this.buscado);
   }
 
 }

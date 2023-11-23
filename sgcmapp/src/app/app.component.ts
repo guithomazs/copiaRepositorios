@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoginService } from './service/login.service';
 import { Usuario } from './model/usuario';
@@ -8,11 +8,19 @@ import { Usuario } from './model/usuario';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   title = 'SGCM';
   currentUrl: string = '';
   usuario: Usuario = <Usuario>{};
+  tema: string = '';
+
+  ngOnInit(): void {
+    let tema = localStorage.getItem("tema");
+    if (tema) {
+        this.mudarTema(tema);
+    }
+  }
 
   constructor(
     router: Router,
@@ -47,6 +55,16 @@ export class AppComponent {
 
   logout(): void {
     this.servicoLogin.logout();
+  }
+
+  mudarTema(temaSelecionado: string): void {
+    if(temaSelecionado){
+      let url = "/assets/css/estilo-tema-" + temaSelecionado + ".css";
+      let link_tema = document.querySelector('#link-tema') as HTMLLinkElement;
+      link_tema.href = url;
+      localStorage.setItem("tema", temaSelecionado);
+    }
+    
   }
 
 }

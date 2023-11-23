@@ -30,6 +30,11 @@ export class EspecialidadeService implements IService<Especialidade> {
   }
     return this.http.get<PageResponse<Especialidade>>(url);
   }
+
+  getAll(): Observable<Especialidade[]> {
+    let url = this.apiUrl + "all";
+    return this.http.get<Especialidade[]>(url);
+  }
   
   getById(id: number): Observable<Especialidade> {
     let url = this.apiUrl + id;

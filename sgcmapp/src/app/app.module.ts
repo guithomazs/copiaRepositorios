@@ -31,6 +31,7 @@ import { PaginacaoComponent } from './component/paginacao/paginacao.component';
 import { TheadOrdenacaoComponent } from './component/thead-ordenacao/thead-ordenacao.component';
 import { AtendimentosFinalizadosComponent } from './component/atendimentos-finalizados/atendimentos-finalizados.component';
 import { AtendimentosCanceladosComponent } from './component/atendimentos-cancelados/atendimentos-cancelados.component';
+import { SeletorTemaComponent } from './component/seletor-tema/seletor-tema.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { AtendimentosCanceladosComponent } from './component/atendimentos-cancel
     PaginacaoComponent,
     TheadOrdenacaoComponent,
     AtendimentosFinalizadosComponent,
-    AtendimentosCanceladosComponent
+    AtendimentosCanceladosComponent,
+    SeletorTemaComponent
   ],
   imports: [
     BrowserModule,
