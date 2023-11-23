@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufac.sgcmapi.model.Atendimento;
+import br.ufac.sgcmapi.model.EStatus;
 import br.ufac.sgcmapi.service.AtendimentoService;
 
 @RestController
@@ -40,6 +41,27 @@ public class AtendimentoController implements IController<Atendimento> {
             Pageable page
             ) {
         Page<Atendimento> registros = servico.getTipo(tipo, page);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    }
+
+    @GetMapping("/lista/{tipos}")
+    public ResponseEntity<Page<Atendimento>> getTiposDiferentes(
+            @PathVariable("tipos") List<EStatus> tipos, 
+            Pageable page
+            ) {
+        System.out.println();
+        Page<Atendimento> registros = servico.getTipos(tipos, page);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    }
+
+    @GetMapping("/lista/{tipos}/{termoBusca}")
+    public ResponseEntity<Page<Atendimento>> getTiposDiferentes(
+            @PathVariable("tipos") List<EStatus> tipos, 
+            @PathVariable("termoBusca") String termoBusca, 
+            Pageable page
+            ) {
+        System.out.println();
+        Page<Atendimento> registros = servico.getTipoBusca(tipos, termoBusca, page);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 

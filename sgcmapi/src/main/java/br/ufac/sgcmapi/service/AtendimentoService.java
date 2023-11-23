@@ -46,8 +46,16 @@ public class AtendimentoService implements IService<Atendimento> {
         return repo.getTipos(status, page);
     }
 
+    public Page<Atendimento> getTipos(List<EStatus> status, Pageable page) {
+        return repo.getTipos(status, page);
+    }
+
     public Page<Atendimento> getTipoBusca(String tipo, String termoBusca, Pageable page) {
         List<EStatus> status = this.defineListaEStatus(tipo);
+        return repo.buscaPorTipo(termoBusca, status, page);
+    }
+
+    public Page<Atendimento> getTipoBusca(List<EStatus> status, String termoBusca, Pageable page) {
         return repo.buscaPorTipo(termoBusca, status, page);
     }
 
