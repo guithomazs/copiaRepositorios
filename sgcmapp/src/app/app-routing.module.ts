@@ -19,6 +19,7 @@ import { LoginComponent } from './component/login/login.component';
 import { authGuard } from './service/auth.guard';
 import { AtendimentosCanceladosComponent } from './component/atendimentos-cancelados/atendimentos-cancelados.component';
 import { AtendimentosFinalizadosComponent } from './component/atendimentos-finalizados/atendimentos-finalizados.component';
+import { AtendimentosPersonalizadosComponent } from './component/atendimentos-personalizados/atendimentos-personalizados.component';
 
 const routes: Routes = [
   { path: '', canActivate: [authGuard], children: [
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'emAndamento', component: AtendimentoListComponent },
       { path: 'finalizados', component: AtendimentosFinalizadosComponent },
       { path: 'cancelados', component: AtendimentosCanceladosComponent },
+      { path: 'personalizados', component: AtendimentosPersonalizadosComponent },
     ]},
     { path: 'pacientes', component: PacienteListComponent },
     { path: 'pacientes/form', component: PacienteFormComponent },
