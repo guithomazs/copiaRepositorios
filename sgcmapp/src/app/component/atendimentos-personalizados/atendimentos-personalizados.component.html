@@ -1,4 +1,7 @@
 <app-barra-comandos (eventoBusca)="get($event)" [addButton]="false"></app-barra-comandos>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <table>
     <thead app-thead-ordenacao
         [colunas]="colunas"
@@ -31,8 +34,33 @@
     (paginaSelecionada)="mudarPagina($event)"
     (tamanhoPaginaSelecionada)="mudarTamanhoPagina($event)"
 >
-    <div divDireita>
-        <select>
-
-        </select></div>
+    <div divDireita class="divDireita">
+        <!-- <input type="text" 
+                [(ngModel)]="searchText" 
+                (focus)="search($event)" 
+                (focusout)="search($event)">
+        <ul class="list-group statuses">
+            <li class="list-group-item list-group-item-action"
+                    *ngFor="let status of StatusNaoSelecionados"
+                    (click)="selectStatus(status)">
+                {{ status }}
+            </li>
+        </ul> -->
+        <!-- <div class="custom-select" style="width:200px;"> -->
+            <select ngModel (ngModelChange)="selectStatus($event)">
+                <!-- <option [ngValue]="undefined"></option> -->
+                <option 
+                        *ngFor="let status of StatusNaoSelecionados" 
+                        [ngValue]="status">
+                    {{status}}
+                </option>
+            </select>
+        <!-- </div> -->
+        <span 
+                class="badge text-bg-primary"
+                *ngFor="let statusSelecionado of SelectedStatus">
+            {{ statusSelecionado }}
+            <span class="material-icons chip-close" (click)="removeStatus(statusSelecionado)">close</span>
+        </span>
+    </div>
 </app-paginacao>

@@ -17,14 +17,15 @@ export class AtendimentosPersonalizadosComponent  implements IList<Atendimento>,
 
   ngOnInit(): void {
     this.get();
-    let items = Object.keys(EStatus).filter((v) => isNaN(Number(v)));
-    console.log(items)
   }
 
   registros: Atendimento[] = Array<Atendimento>();
   paginaRequisicao: PageRequest = new PageRequest();
   paginaResposta: PageResponse<Atendimento> = <PageResponse<Atendimento>>{};
   buscado: string | undefined = '';
+  searchText: string = '';
+  StatusNaoSelecionados = Object.values(EStatus)
+  SelectedStatus: EStatus[] = [];
 
   colunas = [
     { campo: 'data', descricao: 'Data' },
@@ -75,6 +76,25 @@ export class AtendimentosPersonalizadosComponent  implements IList<Atendimento>,
     this.paginaRequisicao.size = tamanhoPagina;
     this.paginaRequisicao.page = 0;
     this.get(this.buscado);
+  }
+
+  getStatusToBeSelected() {
+    this.StatusNaoSelecionados = Object.values(EStatus)
+    for(let selecionado of this.SelectedStatus){
+      this.StatusNaoSelecionados = this.StatusNaoSelecionados.filter(item => item != selecionado)
+    }
+  }
+
+  selectStatus(status: EStatus): void {
+    if(status){
+      this.SelectedStatus.push(status);
+      this.getStatusToBeSelected();
+    }
+  }
+
+  removeStatus(statusARemover: EStatus): void {
+    this.SelectedStatus = this.SelectedStatus.filter(status => status != statusARemover);
+    this.getStatusToBeSelected();
   }
 
 }

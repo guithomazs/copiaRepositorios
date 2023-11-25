@@ -1,0 +1,28 @@
+.list-group-item-action {
+    cursor: pointer;
+}
+
+.chip-close {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+}
+
+.chip-close:hover {
+    cursor: pointer;
+    color: rgb(245, 152, 15);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: fit-content;
+}
+
+.statuses {
+    display: flex;
+    flex-wrap: wrap;
+}
