@@ -6,6 +6,7 @@ import { Atendimento } from '../model/atendimento';
 import { IService } from './i-service';
 import { PageRequest } from '../model/page-request';
 import { PageResponse } from '../model/page-response';
+import { EStatus } from '../model/EStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,29 @@ export class AtendimentoService implements IService<Atendimento> {
     let url = this.apiUrl + tipo + '/';
     if (termoBusca) {
       url += "busca/" + termoBusca;
+    }
+  if(pageRequest) {
+    url += "?page=" + pageRequest.page + "&size=" + pageRequest.size;
+    pageRequest.sort.forEach(campo => {
+      url += "&sort=" + campo;
+    })
+  }
+    return this.http.get<PageResponse<Atendimento>>(url);
+  }
+
+  getWithListOfStatus(listOfStatus: EStatus[], termoBusca?: string | undefined, pageRequest?: PageRequest): Observable<PageResponse<Atendimento>> {
+    let url = this.apiUrl + 'lista/' + listOfStatus;
+    
+    // esse if aqui verificando o tamanho da lista de status permite que eu mantenha salvo o meu 
+    // termo de busca, ou seja, foi a forma que encontrei de manter salvo o meu termo busca para
+    // que eu digite "maria" na minha barra de busca, e somente após isso selecione um status,
+    // o código então utiliza o termo de busca escrito anteriormente, sem dar erro.
+    if(!listOfStatus.length){
+      return this.http.get<PageResponse<Atendimento>>(url);
+    }
+
+    if (termoBusca) {
+      url += '/' + termoBusca;
     }
   if(pageRequest) {
     url += "?page=" + pageRequest.page + "&size=" + pageRequest.size;

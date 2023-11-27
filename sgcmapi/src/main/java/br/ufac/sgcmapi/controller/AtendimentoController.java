@@ -60,7 +60,6 @@ public class AtendimentoController implements IController<Atendimento> {
             @PathVariable("termoBusca") String termoBusca, 
             Pageable page
             ) {
-        System.out.println();
         Page<Atendimento> registros = servico.getTipoBusca(tipos, termoBusca, page);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }

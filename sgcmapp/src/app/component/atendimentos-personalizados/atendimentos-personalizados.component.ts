@@ -16,16 +16,16 @@ export class AtendimentosPersonalizadosComponent  implements IList<Atendimento>,
   constructor(private servico: AtendimentoService) {}
 
   ngOnInit(): void {
-    this.get();
+    this.getWithListOfStatus(this.selectedStatus, this.buscado);
   }
 
   registros: Atendimento[] = Array<Atendimento>();
   paginaRequisicao: PageRequest = new PageRequest();
   paginaResposta: PageResponse<Atendimento> = <PageResponse<Atendimento>>{};
   buscado: string | undefined = '';
-  searchText: string = '';
-  StatusNaoSelecionados = Object.values(EStatus)
-  SelectedStatus: EStatus[] = [];
+  statusNaoSelecionados = Object.values(EStatus)
+  selectedStatus: EStatus[] = [];
+  opcaoDoSelect: string | undefined = '';
 
   colunas = [
     { campo: 'data', descricao: 'Data' },
@@ -34,66 +34,61 @@ export class AtendimentosPersonalizadosComponent  implements IList<Atendimento>,
     { campo: 'profissional.nome', descricao: 'Profissional' },
     { campo: 'profissional.unidade.nome', descricao: 'Unidade' },
     { campo: 'convenio.nome', descricao: 'Convênio' },
-    { campo: '', descricao: 'Status' },
+    { campo: 'status', descricao: 'Status' },
   ]
 
   ordenar(ordenacao: string[]): void {
     this.paginaRequisicao.sort = ordenacao;
     this.paginaRequisicao.page = 0;
-    this.get(this.buscado);
+    this.getWithListOfStatus(this.selectedStatus, this.buscado);
   }
 
   get(termoBusca?: string | undefined): void {
-    this.servico.get(termoBusca, this.paginaRequisicao, 'encerrado').subscribe({
+    this.buscado = termoBusca
+    this.getWithListOfStatus(this.selectedStatus, this.buscado);
+  }
+
+  getWithListOfStatus(listOFStatus: EStatus[], termoBusca?: string | undefined): void {
+    this.servico.getWithListOfStatus(listOFStatus, termoBusca, this.paginaRequisicao).subscribe({
       next: (resposta: PageResponse<Atendimento>) => {
         this.registros = resposta.content;
         this.paginaResposta = resposta;
         this.buscado = termoBusca;
       }
-    });
+    })
   }
 
-  updateStatus(id: number): void {
-    if (confirm('Confirma alteração no status do agendamento?')) {
-      this.servico.updateStatus(id).subscribe({
-        complete: () => {
-          this.get(this.buscado);
-        }
-      });
-    }
-  }
+  updateStatus(id: number): void {}
 
-  delete(id: number): void {
-    throw new Error('Method not implemented.');
-  }
+  delete(id: number): void {}
 
   mudarPagina(paginaSelecionada: number): void { 
     this.paginaRequisicao.page = paginaSelecionada
-    this.get(this.buscado);
+    this.getWithListOfStatus(this.selectedStatus, this.buscado);
   }
 
   mudarTamanhoPagina(tamanhoPagina: number): void {
     this.paginaRequisicao.size = tamanhoPagina;
     this.paginaRequisicao.page = 0;
-    this.get(this.buscado);
+    this.getWithListOfStatus(this.selectedStatus, this.buscado);
   }
 
   getStatusToBeSelected() {
-    this.StatusNaoSelecionados = Object.values(EStatus)
-    for(let selecionado of this.SelectedStatus){
-      this.StatusNaoSelecionados = this.StatusNaoSelecionados.filter(item => item != selecionado)
+    this.statusNaoSelecionados = Object.values(EStatus)
+    for(let selecionado of this.selectedStatus){
+      this.statusNaoSelecionados = this.statusNaoSelecionados.filter(item => item != selecionado)
     }
+    this.opcaoDoSelect = "";
+    this.getWithListOfStatus(this.selectedStatus, this.buscado);
   }
 
   selectStatus(status: EStatus): void {
-    if(status){
-      this.SelectedStatus.push(status);
-      this.getStatusToBeSelected();
-    }
+    this.selectedStatus.push(status);
+    this.getStatusToBeSelected();
   }
 
   removeStatus(statusARemover: EStatus): void {
-    this.SelectedStatus = this.SelectedStatus.filter(status => status != statusARemover);
+    this.selectedStatus = this.selectedStatus.filter(status => status != statusARemover);
     this.getStatusToBeSelected();
   }
 
