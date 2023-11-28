@@ -1,10 +1,12 @@
 package br.ufac.sgcmapi.controller;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +37,10 @@ public class AtendimentoController implements IController<Atendimento> {
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 
-    @GetMapping("/{tipo}/")
-    public ResponseEntity<Page<Atendimento>> getTipo(
-            @PathVariable("tipo") String tipo, 
-            Pageable page
-            ) {
-        Page<Atendimento> registros = servico.getTipo(tipo, page);
-        return new ResponseEntity<>(registros, HttpStatus.OK);
+    @GetMapping("/lista/")
+    public ResponseEntity<Page<Atendimento>> noListGave(){
+        Page<Atendimento> page = new PageImpl<>(Collections.emptyList());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/lista/{tipos}")
@@ -49,7 +48,6 @@ public class AtendimentoController implements IController<Atendimento> {
             @PathVariable("tipos") List<EStatus> tipos, 
             Pageable page
             ) {
-        System.out.println();
         Page<Atendimento> registros = servico.getTipos(tipos, page);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
@@ -75,12 +73,6 @@ public class AtendimentoController implements IController<Atendimento> {
     @GetMapping("/busca/{termoBusca}")
     public ResponseEntity<Page<Atendimento>> get(@PathVariable("termoBusca") String termoBusca, Pageable page) {
         Page<Atendimento> registros = servico.get(termoBusca, page);
-        return new ResponseEntity<>(registros, HttpStatus.OK);
-    }
-
-    @GetMapping("/{tipo}/busca/{termoBusca}")
-    public ResponseEntity<Page<Atendimento>> get(@PathVariable("tipo") String tipo, @PathVariable("termoBusca") String termoBusca, Pageable page) {
-        Page<Atendimento> registros = servico.getTipoBusca(tipo, termoBusca, page);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 

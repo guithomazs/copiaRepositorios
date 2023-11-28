@@ -19,26 +19,16 @@ export class AtendimentoService implements IService<Atendimento> {
 
   get(termoBusca?: string | undefined, pageRequest?: PageRequest, tipo?: string): Observable<PageResponse<Atendimento>> {
     let url = this.apiUrl + tipo + '/';
-    if (termoBusca) {
-      url += "busca/" + termoBusca;
-    }
-  if(pageRequest) {
-    url += "?page=" + pageRequest.page + "&size=" + pageRequest.size;
-    pageRequest.sort.forEach(campo => {
-      url += "&sort=" + campo;
-    })
-  }
     return this.http.get<PageResponse<Atendimento>>(url);
   }
 
   getWithListOfStatus(listOfStatus: EStatus[], termoBusca?: string | undefined, pageRequest?: PageRequest): Observable<PageResponse<Atendimento>> {
     let url = this.apiUrl + 'lista/' + listOfStatus;
     
-    // esse if aqui verificando o tamanho da lista de status permite que eu mantenha salvo o meu 
-    // termo de busca, ou seja, foi a forma que encontrei de manter salvo o meu termo busca para
-    // que eu digite "maria" na minha barra de busca, e somente após isso selecione um status,
-    // o código então utiliza o termo de busca escrito anteriormente, sem dar erro.
+    // esse if aqui verificando o tamanho da lista de status permite que eu mantenha salvo o meu termo de busca, ou seja, foi a forma que encontrei de manter salvo o meu termo busca paraque eu digite "maria" na minha barra de busca, e somente após isso selecione um status,o código então utiliza o termo de busca escrito anteriormente, sem dar erro.
     if(!listOfStatus.length){
+      // se o tamanho de uma possível lista de status(a adição do caractere "?"" faz com que ele diga algo como "se existir um objeto listOfStatus realiza esse código se o tamanho dele for maior que 0")
+      console.log("PRIMEIRO CHAMADO ---> ", url)
       return this.http.get<PageResponse<Atendimento>>(url);
     }
 
@@ -51,6 +41,7 @@ export class AtendimentoService implements IService<Atendimento> {
       url += "&sort=" + campo;
     })
   }
+    console.log("SEGUNDO CHAMADO ---> ", url)
     return this.http.get<PageResponse<Atendimento>>(url);
   }
 

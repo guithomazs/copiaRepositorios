@@ -4,6 +4,7 @@ import { PageRequest } from 'src/app/model/page-request';
 import { PageResponse } from 'src/app/model/page-response';
 import { AtendimentoService } from 'src/app/service/atendimento.service';
 import { IList } from '../i-list';
+import { EStatus } from 'src/app/model/EStatus';
 
 @Component({
   selector: 'app-atendimentos-finalizados',
@@ -21,6 +22,7 @@ export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnI
   registros: Atendimento[] = Array<Atendimento>();
   paginaRequisicao: PageRequest = new PageRequest();
   paginaResposta: PageResponse<Atendimento> = <PageResponse<Atendimento>>{};
+  statusBuscados: EStatus[] = [EStatus.ENCERRADO]
   buscado: string | undefined = '';
 
   colunas = [
@@ -40,7 +42,7 @@ export class AtendimentosFinalizadosComponent implements IList<Atendimento>, OnI
   }
 
   get(termoBusca?: string | undefined): void {
-    this.servico.get(termoBusca, this.paginaRequisicao, 'encerrado').subscribe({
+    this.servico.getWithListOfStatus(this.statusBuscados, termoBusca, this.paginaRequisicao).subscribe({
       next: (resposta: PageResponse<Atendimento>) => {
         this.registros = resposta.content;
         this.paginaResposta = resposta;

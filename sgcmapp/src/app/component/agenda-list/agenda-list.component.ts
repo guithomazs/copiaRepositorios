@@ -4,6 +4,7 @@ import { Atendimento } from 'src/app/model/atendimento';
 import { AtendimentoService } from 'src/app/service/atendimento.service';
 import { PageResponse } from 'src/app/model/page-response';
 import { PageRequest } from 'src/app/model/page-request';
+import { EStatus } from 'src/app/model/EStatus';
 
 @Component({
   selector: 'app-agenda-list',
@@ -24,6 +25,7 @@ export class AgendaListComponent implements IList<Atendimento>, OnInit {
   registros: Atendimento[] = Array<Atendimento>();
   paginaRequisicao: PageRequest = new PageRequest();
   paginaResposta: PageResponse<Atendimento> = <PageResponse<Atendimento>>{};
+  statusBuscados: EStatus[] = [EStatus.AGENDADO, EStatus.CONFIRMADO]
   buscado: string | undefined = '';
 
   colunas = [
@@ -43,7 +45,7 @@ export class AgendaListComponent implements IList<Atendimento>, OnInit {
   }
 
   get(termoBusca?: string | undefined): void {
-    this.servico.get(termoBusca, this.paginaRequisicao, 'agenda').subscribe({
+    this.servico.getWithListOfStatus(this.statusBuscados, termoBusca, this.paginaRequisicao).subscribe({
       next: (resposta: PageResponse<Atendimento>) => {
         this.registros = resposta.content;
         this.paginaResposta = resposta;
